@@ -1,0 +1,9 @@
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\bin\Debug\netstandard2.0\Epic.Framework.Standard.deps.json
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\bin\Debug\netstandard2.0\Epic.Framework.Standard.dll
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\bin\Debug\netstandard2.0\Epic.Framework.Standard.pdb
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\obj\Debug\netstandard2.0\Epic.Framework.Standard.csprojResolveAssemblyReference.cache
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\obj\Debug\netstandard2.0\Epic.Framework.Standard.csproj.CoreCompileInputs.cache
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\obj\Debug\netstandard2.0\Epic.Framework.Standard.AssemblyInfoInputs.cache
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\obj\Debug\netstandard2.0\Epic.Framework.Standard.AssemblyInfo.cs
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\obj\Debug\netstandard2.0\Epic.Framework.Standard.dll
+E:\github\csharp\20180402 Epic.Framework\Epic.Framework.Standard\obj\Debug\netstandard2.0\Epic.Framework.Standard.pdb
