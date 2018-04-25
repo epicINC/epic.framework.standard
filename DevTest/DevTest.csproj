@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Epic.Framework.Standard\Epic.Framework.Standard.csproj" />
+  </ItemGroup>
+
 </Project>

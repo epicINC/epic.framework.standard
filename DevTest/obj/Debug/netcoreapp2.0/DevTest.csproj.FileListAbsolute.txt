@@ -9,3 +9,6 @@ E:\github\csharp\20180402 Epic.Framework\DevTest\obj\Debug\netcoreapp2.0\DevTest
 E:\github\csharp\20180402 Epic.Framework\DevTest\obj\Debug\netcoreapp2.0\DevTest.AssemblyInfo.cs
 E:\github\csharp\20180402 Epic.Framework\DevTest\obj\Debug\netcoreapp2.0\DevTest.dll
 E:\github\csharp\20180402 Epic.Framework\DevTest\obj\Debug\netcoreapp2.0\DevTest.pdb
+E:\github\csharp\20180402 Epic.Framework\DevTest\bin\Debug\netcoreapp2.0\Epic.Framework.Standard.dll
+E:\github\csharp\20180402 Epic.Framework\DevTest\bin\Debug\netcoreapp2.0\Epic.Framework.Standard.pdb
+E:\github\csharp\20180402 Epic.Framework\DevTest\obj\Debug\netcoreapp2.0\DevTest.csproj.CopyComplete
