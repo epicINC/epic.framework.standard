@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet &quot;$(SolutionDir)Epic.Solutions.BuildProcessor.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;mv &quot;$(TargetDir)\Epic.Framework.Standard.dll.mod&quot; &quot;$(TargetDir)\Epic.Framework.Standard.dll&quot;&#xD;&#xA;" />
+    <Exec Command="dotnet &quot;$(SolutionDir)tools\Epic.Solutions.BuildProcessor.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;mv &quot;$(TargetDir)Epic.Framework.Standard.dll.mod&quot; &quot;$(TargetDir)Epic.Framework.Standard.dll&quot;" />
   </Target>
 
 </Project>

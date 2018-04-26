@@ -20,7 +20,7 @@ namespace Epic.Solutions.BuildProcessor
         }
 
 
-        static void Main(string[] args)
+        static void Run(string[] args)
         {
 
             //Console.WriteLine("args: "+ String.Join(",", args));
@@ -52,5 +52,43 @@ namespace Epic.Solutions.BuildProcessor
             //Console.WriteLine("savePath: " +  savePath);
 
         }
+
+
+        #region Helper methods
+
+        public static void Main(string[] args)
+        {
+            try
+            {
+                Run(args);
+            }
+            catch (Exception e)
+            {
+                string error = string.Format("---\nThe following error occurred while executing the snippet:\n{0}\n---", e.ToString());
+                Console.WriteLine(error);
+            }
+            finally
+            {
+                Console.Write("done...");
+                //Console.ReadKey();
+            }
+        }
+
+        private static void WL(object text, params object[] args)
+        {
+            Console.WriteLine(text.ToString(), args);
+        }
+
+        private static void RL()
+        {
+            Console.ReadLine();
+        }
+
+        private static void Break()
+        {
+            System.Diagnostics.Debugger.Break();
+        }
+
+        #endregion
     }
 }
