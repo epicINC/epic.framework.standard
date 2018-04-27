@@ -21,7 +21,7 @@ namespace Epic.Solutions.BuildProcessor
             Console.WriteLine("Current Module: {0}", module.FileName);
 
 
-            var types = module.Types.Where(e => e.IsClass);
+            var types = module.Types.Where(e => e.IsClass || e.IsInterface);
 
 
             this.ChangeTypes(types);

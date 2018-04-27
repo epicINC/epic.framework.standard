@@ -44,6 +44,11 @@ namespace Epic.Extensions
         }
 
 
+        public static bool IgnoreCaseEquals(this string value, string expected)
+        {
+            return String.Equals(value, expected, StringComparison.OrdinalIgnoreCase);
+        }
+
 
         #region Regex
 
