@@ -13,4 +13,3 @@ namespace Epic.Components
         Right = 2
     }
 }
-    

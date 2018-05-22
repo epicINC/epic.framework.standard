@@ -69,10 +69,7 @@ namespace Epic.Caches
 
         public int Count
         {
-            get
-            {
-                return this.Data.Count;
-            }
+            get { return this.Data.Count; }
         }
 
 

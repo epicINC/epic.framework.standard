@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 namespace Epic.Collections
 {
 
-
     /// <summary>
     /// IEqualityComparer 动态实现
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class DynamicEqualityComparer<T> : IEqualityComparer<T>
+    internal class DynamicEqualityComparer<T> : IEqualityComparer<T>
     {
         public DynamicEqualityComparer(Func<T, T, bool> func, Func<T, int> getHashCode = null)
         {

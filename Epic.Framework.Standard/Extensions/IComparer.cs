@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Epic.Collections;
+using System;
+
 
 namespace System.Collections.Generic
 {
@@ -7,31 +9,13 @@ namespace System.Collections.Generic
 
         public static void Sort<T>(this List<T> value, Func<T, T, int> comparer)
         {
-            value.Sort(new ComparerFunc<T>(comparer));
+            value.Sort(new DynamicComparer<T>(comparer));
         }
 
         public static void Sort<T>(this List<T> value, int index, int count, Func<T, T, int> comparer)
         {
-            value.Sort(index, count, new ComparerFunc<T>(comparer));
+            value.Sort(index, count, new DynamicComparer<T>(comparer));
         }
 
     }
-
-
-    internal class ComparerFunc<T> : IComparer<T>
-    {
-        public ComparerFunc(Func<T, T, int> comparer)
-        {
-            this.Comparer = comparer;
-        }
-
-        Func<T, T, int> Comparer;
-
-        public int Compare(T x, T y)
-        {
-            return this.Comparer(x, y);
-        }
-    }
-
-
 }

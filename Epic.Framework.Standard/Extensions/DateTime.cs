@@ -6,9 +6,15 @@ namespace Epic.Extensions
 {
     public static class DateTimeExtensions
     {
-        public static long ToUnixTimeMilliseconds(this DateTime value)
+        public static DateTime Tomorrow(this DateTime value)
         {
-            return ((DateTimeOffset)value).ToUnixTimeMilliseconds();
+            return value.AddDays(1);
         }
+
+        public static DateTime Yesterday(this DateTime value)
+        {
+            return value.AddDays(-1);
+        }
+
     }
 }

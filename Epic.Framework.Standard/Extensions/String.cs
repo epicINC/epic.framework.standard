@@ -8,6 +8,14 @@ namespace Epic.Extensions
 {
     public static class StringExtensions
     {
+        public static bool IgnoreCaseEquals(this string value, string expected, StringComparison comparisonType = StringComparison.OrdinalIgnoreCase)
+        {
+            if (value == null) return expected == null;
+            return String.CompareOrdinal(value, expected) == 0;
+        }
+
+
+
         public static string Repeat(this string value, int count)
         {
             if (count < 1) return String.Empty;

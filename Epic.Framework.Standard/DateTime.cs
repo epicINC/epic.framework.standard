@@ -9,7 +9,12 @@ namespace Epic
     {
         public static long Now()
         {
-            return DateTimeExtensions.ToUnixTimeMilliseconds(DateTime.Now);
+            return ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+        }
+
+        public static DateTime From(long value)
+        {
+            return DateTimeOffset.FromUnixTimeMilliseconds(value).DateTime;
         }
     }
 }
