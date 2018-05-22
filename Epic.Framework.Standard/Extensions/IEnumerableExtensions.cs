@@ -11,6 +11,12 @@ namespace Epic.Extensions
     public static class IEnumerableExtensions
     {
 
+        public static IEnumerable<T> Random<T>(this IEnumerable<T> value)
+        {
+            var random = new Random();
+            return value.OrderBy(e => random.Next());
+        }
+
         public static void ForEach<T>(this IEnumerable<T> value, Action<T> action)
         {
             ForEach<T>(value, (e, i) => action(e));

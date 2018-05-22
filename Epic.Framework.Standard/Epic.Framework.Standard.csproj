@@ -24,8 +24,4 @@
     <Folder Include="Extensions\Reflection\" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet &quot;$(SolutionDir)tools\Epic.Solutions.BuildProcessor.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;mv &quot;$(TargetDir)Epic.Framework.Standard.dll.mod&quot; &quot;$(TargetDir)Epic.Framework.Standard.dll&quot;&#xD;&#xA;copy /y  &quot;$(TargetDir)&quot; &quot;$(SolutionDir)tools\&quot;" />
-  </Target>
-
 </Project>

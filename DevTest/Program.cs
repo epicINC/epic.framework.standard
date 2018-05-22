@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Epic.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,8 +15,11 @@ namespace DevTest
         }
         static void RunSnippet(string[] args)
         {
-            var item = new Lazy<User>();
-            WL(item.Value);
+            var pc = new ProbabilityControl(new double[] { 0.1, 0, 0.2 });
+
+
+            WL(pc.Calc(0.1) >= 0);
+
 
         }
 

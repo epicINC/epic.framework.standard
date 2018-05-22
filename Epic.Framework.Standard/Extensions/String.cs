@@ -8,13 +8,11 @@ namespace Epic.Extensions
 {
     public static class StringExtensions
     {
-        public static bool IgnoreCaseEquals(this string value, string expected, StringComparison comparisonType = StringComparison.OrdinalIgnoreCase)
+        public static bool IgnoreCaseEquals(this string value, string expected)
         {
             if (value == null) return expected == null;
             return String.CompareOrdinal(value, expected) == 0;
         }
-
-
 
         public static string Repeat(this string value, int count)
         {
@@ -47,15 +45,9 @@ namespace Epic.Extensions
         public static string Slice(this string value, int beginIndex, int endIndex)
         {
             if (beginIndex < 0) beginIndex = value.Length + beginIndex;
-
             return value.Substring(beginIndex, endIndex - beginIndex);
         }
 
-
-        public static bool IgnoreCaseEquals(this string value, string expected)
-        {
-            return String.Equals(value, expected, StringComparison.OrdinalIgnoreCase);
-        }
 
 
         #region Regex

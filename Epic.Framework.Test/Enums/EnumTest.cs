@@ -9,6 +9,7 @@ using Epic.Enums.Extensions;
 
 namespace Epic.Framework.Test.Enums
 {
+    /*
     [TestClass]
     public class EnumTest
     {
@@ -101,4 +102,5 @@ namespace Epic.Framework.Test.Enums
         }
 
     }
+    */
 }
