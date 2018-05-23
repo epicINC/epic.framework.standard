@@ -15,15 +15,9 @@ namespace DevTest
         }
         static void RunSnippet(string[] args)
         {
-            var pc = new ProbabilityControl(new double[] { 0.1, 0, 0.2 });
-
-
-            WL(pc.Calc(0.1) >= 0);
-
-
+            var pc = ProbabilityControl.Fix(new double[] { 0.1, 0, 0.2 });
+            WL(pc.Calc(0.4));
         }
-
-
 
         #region Helper methods
 

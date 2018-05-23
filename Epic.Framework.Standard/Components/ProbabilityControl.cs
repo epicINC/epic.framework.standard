@@ -5,31 +5,66 @@ using System.Linq;
 
 namespace Epic.Components
 {
+
+
+    public class ProbabilityControlSuit<T>
+    {
+        public double Rate { get; set; }
+        public bool Fix { get; set; }
+
+
+        public T Award { get; set; }
+    }
+
+
     public class ProbabilityControl
     {
-        // [1, 0, 1]
-        public ProbabilityControl(double[] probabilities)
+
+        /// <summary>
+        /// 固定比例，不自动计算
+        /// </summary>
+        /// <param name="probabilities"></param>
+        /// <returns></returns>
+        public static ProbabilityControl Fix(double[] value)
         {
-            var total = probabilities.Sum();
+            return new ProbabilityControl(Init(value));
+        }
+
+        public static ProbabilityControl Calc(double[] value)
+        {
+            return new ProbabilityControl(Init(CalcRate(value)));
+        }
+
+        static double[] CalcRate(double[] value)
+        {
+            var total = value.Sum();
             if (total != 1)
             {
-                for (var i = 0; i < probabilities.Length; i++)
-                    probabilities[i] = probabilities[i] / total;
+                for (var i = 0; i < value.Length; i++)
+                    value[i] = value[i] / total;
             }
-            Init(probabilities);
+            return value;
         }
 
-        void Init(double[] probabilities)
+        static double[] Init(double[] value)
         {
-            this.Probabilities = new double[probabilities.Length];
+            var result = new double[value.Length];
 
-            double result = 0;
-            for (var i = 0; i < probabilities.Length; i++)
+            double total = 0;
+            for (var i = 0; i < value.Length; i++)
             {
-                if (probabilities[0] == 0) continue;
-                this.Probabilities[i] = result += probabilities[i];
+                if (value[i] == 0) continue;
+                result[i] = total += value[i];
             }
+            return result;
         }
+
+        // [1, 0, 1]
+        ProbabilityControl(double[] value)
+        {
+            this.Probabilities = value;
+        }
+
 
         double[] Probabilities;
 

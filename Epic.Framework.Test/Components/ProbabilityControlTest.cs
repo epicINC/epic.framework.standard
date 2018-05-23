@@ -14,7 +14,7 @@ namespace Epic.Framework.Test.Components
         [TestMethod]
         public void Repeat()
         {
-            var pc = new ProbabilityControl(new double[] { 0.1,0.2 });
+            var pc = ProbabilityControl.Fix(new double[] { 0.1,0.2 });
 
 
             Assert.IsTrue(pc.Calc(0.1) >= 0);
