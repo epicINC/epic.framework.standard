@@ -1,12 +1,20 @@
 ﻿using Epic.Components;
+using Epic.Converters;
+using Snowflake;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace DevTest
 {
+ 
+
     class Program
     {
+
+
 
         public class User
         {
@@ -15,8 +23,12 @@ namespace DevTest
         }
         static void RunSnippet(string[] args)
         {
-            var pc = ProbabilityControl.Fix(new double[] { 0.1, 0, 0.2 });
-            WL(pc.Calc(0.4));
+
+
+
+
+
+
         }
 
         #region Helper methods
@@ -25,7 +37,11 @@ namespace DevTest
         {
             try
             {
-                RunSnippet(args);
+                do
+                {
+                    RunSnippet(args);
+                } while ((Console.ReadKey().Key != ConsoleKey.Escape));
+                   
             }
             catch (Exception e)
             {
