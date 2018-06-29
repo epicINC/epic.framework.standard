@@ -9,15 +9,13 @@ namespace Epic.Converters
 {
     public class ObjectConverter
     {
-
-
         public static Dictionary<string, object> AsDictionary(object value)
         {
             var result = new Dictionary<string, object>();
             if (value == null) return result;
 
-            foreach (PropertyDescriptor propertyDescriptor in TypeDescriptor.GetProperties(value))
-                result.Add(propertyDescriptor.Name, propertyDescriptor.GetValue(value));
+            foreach (PropertyDescriptor item in TypeDescriptor.GetProperties(value))
+                result.Add(item.Name, item.GetValue(value));
             return result;
         }
 

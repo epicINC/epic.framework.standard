@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
@@ -21,6 +22,32 @@ namespace Epic
         public static string Stringify(object value)
         {
             return JsonConvert.SerializeObject(value);
+        }
+
+        public static object Parse(Stream value, Type objectType)
+        {
+            using (var sr = new StreamReader(value))
+            {
+                return (new JsonSerializer()).Deserialize(sr, objectType);
+            }
+        }
+
+        public static object Parse(byte[] value, Type objectType)
+        {
+            using (var ms = new MemoryStream(value))
+            {
+                return Parse(ms, objectType);
+            }
+        }
+
+        public static T Parse<T>(byte[] value)
+        {
+            return (T)Parse(value, typeof(T));
+        }
+
+        public static T Parse<T>(Stream value)
+        {
+            return (T)Parse(value, typeof(T));
         }
 
     }
