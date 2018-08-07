@@ -34,15 +34,31 @@ namespace Epic.Extensions
         #endregion
 
 
-        public static async Task<T> SendAsync<T>(this HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken)
+        public static async Task<HttpResponseMessage> SendAsync(this HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var result = await client.SendAsync(request, cancellationToken);
-            if (!result.IsSuccessStatusCode) return default(T);
-            using (var stream = await result.Content.ReadAsStreamAsync())
+            return await client.SendAsync(request, cancellationToken);
+        }
+
+
+        public static async Task<T> JsonResult<T>(this HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode) return default(T);
+            return await ReadAsJsonAsync<T>(response.Content);
+        }
+
+        public static async Task<T> JsonResult<T>(this Task<HttpResponseMessage> value)
+        {
+            var response = await value;
+            if (!response.IsSuccessStatusCode) return default(T);
+            return await ReadAsJsonAsync<T>(response.Content);
+        }
+
+        public static async Task<T> ReadAsJsonAsync<T>(this HttpContent value)
+        {
+            using (var stream = await value.ReadAsStreamAsync())
             {
                 return JSON.Parse<T>(stream);
             }
-                
         }
 
         static Uri CreateUri(string value)
@@ -51,79 +67,101 @@ namespace Epic.Extensions
             return new Uri(value, UriKind.RelativeOrAbsolute);
         }
 
-        #region PostAsync
 
-        public static Task<T> PostAsync<T>(this HttpClient client, string requestUri, HttpContent content)
+        #region Get Json Async
+
+
+
+        public static Task<HttpResponseMessage> GetAsync<T>(this HttpClient client, Uri requestUri, T query) where T : class
         {
-            return PostAsync<T>(client, CreateUri(requestUri), content, CancellationToken.None);
-        }
+            var builder = new UriBuilder(requestUri.IsAbsoluteUri ? requestUri : new Uri(client.BaseAddress, requestUri));
 
-
-        public static Task<T> PostAsync<T>(this HttpClient client, Uri requestUri, HttpContent content)
-        {
-            return PostAsync<T>(client, requestUri, content, CancellationToken.None);
-        }
-
-
-        public static Task<T> PostAsync<T>(this HttpClient client, string requestUri, HttpContent content, CancellationToken cancellationToken)
-        {
-            return PostAsync<T>(client, CreateUri(requestUri), content, cancellationToken);
-        }
-
-
-        public static Task<T> PostAsync<T>(this HttpClient client, Uri requestUri, HttpContent content, CancellationToken cancellationToken)
-        {
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri)
+            var dictionary = JQueryString.Parse(query);
+            if (!String.IsNullOrWhiteSpace(builder.Query))
             {
-                Content = content
-            };
-            return SendAsync<T>(client, httpRequestMessage, cancellationToken);
+                var collection = JQueryString.Parse(builder.Query);
+                foreach (var key in collection.AllKeys)
+                    dictionary.Add(key, collection[key]);
+            }
+
+            builder.Query = JQueryString.Stirngify(dictionary);
+
+            return client.GetAsync(builder.Uri);
         }
+        
+        #endregion
+
+        #region PostJsonAsync
+
+        //public static Task<HttpResponseMessage> PostJsonAsync<T>(this HttpClient client, Uri requestUri, T value, CancellationToken cancellationToken) where T : class
+        //{
+        //    return client.PostAsync(requestUri, new StringContent(JSON.Stringify(value), Encoding.UTF8), cancellationToken);
+        //}
+
+        //public static Task<HttpResponseMessage> PostJsonAsync<T>(this HttpClient client, Uri requestUri, T value) where T : class
+        //{
+        //    return PostJsonAsync<T>(client, requestUri, value, CancellationToken.None);
+        //}
+
+        //public static Task<HttpResponseMessage> PostJsonAsync<T>(this HttpClient client, string requestUri, T value) where T : class
+        //{
+        //    return PostJsonAsync<T>(client, CreateUri(requestUri), value, CancellationToken.None);
+        //}
 
         #endregion
 
 
-        #region PostForm
 
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value)
+        #region PostFormAsync
+
+
+        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value)
         {
-            return PostFormAsync<T>(client, CreateUri(requestUri), value, CancellationToken.None);
+            return PostFormAsync(client, CreateUri(requestUri), value, CancellationToken.None);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value)
+        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value)
         {
-            return PostFormAsync<T>(client, requestUri, value, CancellationToken.None);
+            return PostFormAsync(client, requestUri, value, CancellationToken.None);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
+        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
         {
-            return PostFormAsync<T>(client, CreateUri(requestUri), value, cancellationToken);
+            return PostFormAsync(client, CreateUri(requestUri), value, cancellationToken);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
+        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
         {
-            return PostAsync<T>(client, requestUri, ParseFormContent(value), cancellationToken);
+            return client.PostAsync(requestUri, ParseFormContent(value), cancellationToken);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, string requestUri, dynamic value)
+        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, string requestUri, T value) where T : class
         {
-            return PostFormAsync<T>(client, CreateUri(requestUri), value, CancellationToken.None);
+            if (value is IEnumerable<KeyValuePair<string, object>> collection)
+                return PostFormAsync(client, requestUri, collection, CancellationToken.None);
+            return PostFormAsync(client, CreateUri(requestUri), value, CancellationToken.None);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, Uri requestUri, dynamic value)
+        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, Uri requestUri, T value) where T : class
         {
-            return PostFormAsync<T>(client, requestUri, value, CancellationToken.None);
+            if (value is IEnumerable <KeyValuePair<string, object>> collection)
+                return PostFormAsync(client, requestUri, collection, CancellationToken.None);
+            return PostFormAsync(client, requestUri, value, CancellationToken.None);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, string requestUri, dynamic value, CancellationToken cancellationToken)
+        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, string requestUri, T value, CancellationToken cancellationToken) where T : class
         {
-            return PostFormAsync<T>(client, CreateUri(requestUri), value, cancellationToken);
+            if (value is IEnumerable<KeyValuePair<string, object>> collection)
+                return PostFormAsync(client, CreateUri(requestUri), collection, CancellationToken.None);
+            return PostFormAsync(client, CreateUri(requestUri), value, cancellationToken);
         }
 
-        public static Task<T> PostFormAsync<T>(this HttpClient client, Uri requestUri, dynamic value, CancellationToken cancellationToken)
+        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, Uri requestUri, T value, CancellationToken cancellationToken) where T : class
         {
-            return PostAsync<T>(client, requestUri, ParseFormContent(value), cancellationToken);
+            if (value is IEnumerable<KeyValuePair<string, object>> collection)
+                return PostFormAsync(client, requestUri, collection, CancellationToken.None);
+            return client.PostAsync(requestUri, ParseFormContent(value), cancellationToken);
         }
 
         #endregion
@@ -131,10 +169,7 @@ namespace Epic.Extensions
         #region ParseFormContent
 
 
-        static FormUrlEncodedContent ParseUrlEncodedContent(IEnumerable<KeyValuePair<string, string>> value)
-        {
-            return new FormUrlEncodedContent(value);
-        }
+
 
         static MultipartFormDataContent ParseMultipartFormContent(IEnumerable<KeyValuePair<string, object>> value)
         {
@@ -143,12 +178,25 @@ namespace Epic.Extensions
             {
                 switch (item.Value)
                 {
+                    case FileStream stream:
+                        stream.Position = 0;
+                        var fileName = Path.GetFileName(stream.Name);
+                        result.Add(new StreamContent(stream), fileName, fileName);
+                        break;
                     case Stream stream:
-                        result.Add(new StreamContent(stream));
+                        stream.Position = 0;
+                        result.Add(new StreamContent(stream), item.Key, item.Key);
                         break;
                     case null:
                         break;
+                    case string s:
+                        result.Add(new StringContent(s), item.Key);
+                        break;
+                    case byte[] s:
+                        result.Add(new ByteArrayContent(s), item.Key);
+                        break;
                     default:
+                        //result.Add(new ByteArrayContent(Encoding.UTF8.GetBytes(item.Value.ToString())), item.Key);
                         result.Add(new StringContent(item.Value.ToString()), item.Key);
                         break;
                 }
@@ -156,28 +204,39 @@ namespace Epic.Extensions
             return result;
         }
 
+        public static MultipartFormDataContent ParseMultipartFormContent<T>(T value) where T : class
+        {
+            return ParseMultipartFormContent(JQueryString.Parse(value));
+        }
+
+
+        public static FormUrlEncodedContent ParseUrlEncodedContent(IEnumerable<KeyValuePair<string, string>> value)
+        {
+            return new FormUrlEncodedContent(value);
+        }
+
+        public static FormUrlEncodedContent ParseUrlEncodedContent(IEnumerable<KeyValuePair<string, object>> value)
+        {
+            return ParseUrlEncodedContent(value.Select(e => new KeyValuePair<string, string>(e.Key, e.Value?.ToString())));
+        }
+
+        public static FormUrlEncodedContent ParseUrlEncodedContent<T>(T value) where T : class
+        {
+            return ParseUrlEncodedContent(JQueryString.Parse(value));
+        }
+
+        public static HttpContent ParseFormContent<T>(T value) where T : class
+        {
+            return ParseFormContent(JQueryString.Parse(value) as IEnumerable<KeyValuePair<string, object>>);
+        }
+
+
         public static HttpContent ParseFormContent(IEnumerable<KeyValuePair<string, object>> value)
         {
-            value.Select(e => e);
             if (value.Any(e => e.Value != null && e.Value is Stream))
                 return ParseMultipartFormContent(value);
             else
                 return ParseUrlEncodedContent(value);
-        }
-
-        public static FormUrlEncodedContent ParseUrlEncodedContent(dynamic value)
-        {
-            return new FormUrlEncodedContent(ObjectConverter.AsDictionary(value));
-        }
-
-        public static MultipartFormDataContent ParseMultipartFormContent(dynamic value)
-        {
-            return ParseMultipartFormContent(ObjectConverter.AsDictionary(value));
-        }
-
-        public static HttpContent ParseFormContent(dynamic value)
-        {
-            return ParseFormContent(ObjectConverter.AsDictionary(value));
         }
 
         #endregion

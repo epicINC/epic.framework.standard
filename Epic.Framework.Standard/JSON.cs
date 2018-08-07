@@ -50,5 +50,31 @@ namespace Epic
             return (T)Parse(value, typeof(T));
         }
 
+
+        public static T Read<T>(string path)
+        {
+            using (var stream = File.OpenRead(path))
+            {
+                return Parse<T>(stream);
+            }
+        }
+
+        public static bool Save(string path, object value)
+        {
+            try
+            {
+                using (var sw = File.CreateText(path))
+                {
+                    var serializer = new JsonSerializer();
+                    serializer.Serialize(sw, value);
+                }
+                return true;
+            } catch
+            {
+                return false;
+            }
+
+        }
+
     }
 }

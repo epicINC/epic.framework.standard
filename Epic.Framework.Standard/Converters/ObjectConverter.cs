@@ -23,5 +23,6 @@ namespace Epic.Converters
         {
             return DictionaryConverter.AsQueryString(AsDictionary(value), removeEmptyEntry);
         }
+
     }
 }

@@ -3,11 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Epic</RootNamespace>
+    <Authors>JayYU</Authors>
+    <Company>Epic.inc</Company>
+    <PackageProjectUrl>https://github.com/epicINC/epic.framework.standard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/epicINC/epic.framework.standard.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>false</Optimize>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -16,6 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.3.0" />
@@ -24,5 +33,9 @@
   <ItemGroup>
     <Folder Include="Extensions\Reflection\" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet &quot;$(SolutionDir)tools\Epic.Solutions.BuildProcessor.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;mv &quot;$(TargetDir)Epic.Framework.Standard.dll.mod&quot; &quot;$(TargetDir)Epic.Framework.Standard.dll&quot;&#xD;&#xA;copy /y  &quot;$(TargetDir)&quot; &quot;$(SolutionDir)tools\&quot;" />
+  </Target>
 
 </Project>
