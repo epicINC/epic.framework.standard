@@ -28,22 +28,10 @@
           "System.Threading": "4.0.11"
         },
         "runtime": {
-          "lib/netstandard1.3/Mono.Cecil.Mdb.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/netstandard1.3/Mono.Cecil.Pdb.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/netstandard1.3/Mono.Cecil.Rocks.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          },
-          "lib/netstandard1.3/Mono.Cecil.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
-          }
+          "lib/netstandard1.3/Mono.Cecil.Mdb.dll": {},
+          "lib/netstandard1.3/Mono.Cecil.Pdb.dll": {},
+          "lib/netstandard1.3/Mono.Cecil.Rocks.dll": {},
+          "lib/netstandard1.3/Mono.Cecil.dll": {}
         }
       },
       "NETStandard.Library/2.0.2": {},
