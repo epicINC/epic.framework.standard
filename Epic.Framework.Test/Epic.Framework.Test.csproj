@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Components\ProbabilityControlTest.cs" />
     <Compile Include="Enums\EnumTest.cs" />
+    <Compile Include="Events\EventEmitterTest.cs" />
     <Compile Include="Extensions\EnumerableTest.cs" />
     <Compile Include="Extensions\StringTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

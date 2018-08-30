@@ -9,8 +9,11 @@
     <RepositoryUrl>https://github.com/epicINC/epic.framework.standard.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Platforms>AnyCPU;x64</Platforms>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.1.2</AssemblyVersion>
+    <FileVersion>1.0.1.2</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -40,14 +43,11 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Extensions\Reflection\" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet &quot;$(SolutionDir)tools\Epic.Solutions.BuildProcessor.dll&quot; &quot;$(TargetPath)&quot;&#xD;&#xA;mv &quot;$(TargetDir)Epic.Framework.Standard.dll.mod&quot; &quot;$(TargetDir)Epic.Framework.Standard.dll&quot;&#xD;&#xA;copy /y  &quot;$(TargetDir)&quot; &quot;$(SolutionDir)tools\&quot;" />
-  </Target>
 
 </Project>

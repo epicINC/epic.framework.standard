@@ -18,14 +18,14 @@ namespace Epic
         #region ArgumentNull
 
         [SecuritySafeCritical]
-        public static void ArgumentNull(string paramName, string message)
+        public static ArgumentNullException ArgumentNull(string paramName, string message = null)
         {
-            throw new ArgumentNullException(paramName, message);
+            return new ArgumentNullException(paramName, message);
         }
 
 
         [SecuritySafeCritical]
-        public static void ArgumentNull(string paramName, object argument)
+        public static void CheckArgumentNull(string paramName, object argument)
         {
             if (argument == null)
                 throw new ArgumentNullException(paramName);

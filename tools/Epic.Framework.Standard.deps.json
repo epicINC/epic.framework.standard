@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.0": {},
     ".NETStandard,Version=v2.0/": {
-      "Epic.Framework.Standard/1.0.0": {
+      "Epic.Framework.Standard/1.0.2": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.6",
           "Microsoft.CSharp": "4.5.0",
@@ -127,7 +127,7 @@
     }
   },
   "libraries": {
-    "Epic.Framework.Standard/1.0.0": {
+    "Epic.Framework.Standard/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

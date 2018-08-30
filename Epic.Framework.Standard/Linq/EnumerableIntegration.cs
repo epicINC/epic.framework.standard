@@ -1,15 +1,42 @@
-﻿using Epic.Collections;
+﻿using Epic;
+using Epic.Collections;
 using Epic.Converters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace Epic.Extensions
+namespace System.Linq
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableIntegration
     {
+
+        //public static bool Remove<T>(this ICollection<T> value, Func<T, bool> predicate)
+        //{
+        //    if (value.IsReadOnly) return false;
+
+        //    return value.Where(predicate).ToList().Select(e => value.Remove(e)).All(e => e);
+        //}
+
+        public static bool SequenceEqual<T, K>(this IEnumerable<T> first, IEnumerable<K> second, Func<T, K, bool> comparer)
+        {
+            if (first == null) throw Errors.ArgumentNull("first");
+            if (second == null) throw Errors.ArgumentNull("second");
+
+            using (var enumerator = first.GetEnumerator())
+            {
+                using (var enumerator2 = second.GetEnumerator())
+                {
+                    while (enumerator.MoveNext())
+                    {
+                        if (!enumerator2.MoveNext() || !comparer(enumerator.Current, enumerator2.Current)) return false;
+                    }
+                    if (enumerator2.MoveNext()) return false;
+                }
+            }
+            return true;
+        }
+
 
         public static IEnumerable<T> Random<T>(this IEnumerable<T> value)
         {
@@ -24,7 +51,7 @@ namespace Epic.Extensions
 
         public static void ForEach<T>(this IEnumerable<T> value, Action<T, int> action)
         {
-            Errors.ArgumentNull("action", action);
+            Errors.CheckArgumentNull("action", action);
             var i = 0;
             foreach (var item in value)
                 action(item, i++);
@@ -110,6 +137,44 @@ namespace Epic.Extensions
             return source.Except(intersect);
         }
 
+
+
+        public static IEnumerable<TResult> LeftJoin<T, K, TKey, TResult>(this IEnumerable<T> left, IEnumerable<K> right, Func<T, TKey> leftKey, Func<K, TKey> rightKey, Func<T, K, TResult> selector)
+        {
+            return left
+                .GroupJoin(right, leftKey, rightKey, (l, r) => new { l, r })
+                .SelectMany(temp => temp.r.DefaultIfEmpty(), (temp, r) => selector(temp.l, r));
+        }
+
+        public static IEnumerable<TResult> RightJoin<T, K, TKey, TResult>(this IEnumerable<T> left, IEnumerable<K> right, Func<T, TKey> leftKey, Func<K, TKey> rightKey, Func<T, K, TResult> selector)
+        {
+            return right
+            .GroupJoin(left, rightKey, leftKey, (r, l) => new { r, l })
+            .SelectMany(temp => temp.l.DefaultIfEmpty(), (temp, r) => selector(r, temp.r));
+        }
+
+
+        public static IEnumerable<TResult> UnionAll<T, K, TKey, TResult>(this IEnumerable<T> left, IEnumerable<K> right, Func<T, TKey> leftKey, Func<K, TKey> rightKey, Func<T, K, TResult> selector)
+        {
+            return LeftJoin(left, right, leftKey, rightKey, selector)
+                .Concat(RightJoin(left, right, leftKey, rightKey, selector))
+                .Distinct();
+        }
+
+        /// <summary>
+        /// 笛卡尔积
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="K"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="selector"></param>
+        /// <returns></returns>
+        public static IEnumerable<TResult> CrossJoin<T, K, TResult>(this IEnumerable<T> left, IEnumerable<K> right, Func<T, K, TResult> selector)
+        {
+            return left.SelectMany(e => right, selector);
+        }
 
     }
 }

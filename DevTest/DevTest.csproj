@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Epic.Framework.Standard\Epic.Framework.Standard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Linq\" />
+  </ItemGroup>
+
 </Project>

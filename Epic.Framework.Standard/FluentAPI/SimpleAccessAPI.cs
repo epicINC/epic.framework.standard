@@ -11,8 +11,6 @@ namespace Epic.FluentAPI
     {
         public static MemberInfo Find(this LambdaExpression value)
         {
-
-
             switch (value.Body.NodeType)
             {
                 case ExpressionType.MemberAccess :

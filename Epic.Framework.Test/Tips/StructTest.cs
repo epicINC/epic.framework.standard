@@ -62,8 +62,10 @@ namespace Epic.Framework.Test.Tips
         [TestMethod]
         public void FloatBytes()
         {
-            var result = new FloatBytes();
-            result.Value = 0.4f;
+            var result = new FloatBytes
+            {
+                Value = 0.4f
+            };
             Assert.AreEqual(result.Index0, 205);
             Assert.AreEqual(result.Index1, 204);
             Assert.AreEqual(result.Index2, 204);

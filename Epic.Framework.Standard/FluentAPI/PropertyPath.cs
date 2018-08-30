@@ -57,7 +57,7 @@ namespace Epic.FluentAPI
 
             if (Object.ReferenceEquals(this, value)) return true;
 
-            return this.components.SequenceEqual(value.components, (PropertyInfo p1, PropertyInfo p2) => p1.IsSame(p2));
+            return this.components.SequenceEqual(value.components, (p1, p2) => p1.IsSame(p2));
         }
 
         public override bool Equals(object obj)

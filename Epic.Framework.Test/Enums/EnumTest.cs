@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Epic.Enums;
-using Epic.Enums.Extensions;
 
 namespace Epic.Framework.Test.Enums
 {

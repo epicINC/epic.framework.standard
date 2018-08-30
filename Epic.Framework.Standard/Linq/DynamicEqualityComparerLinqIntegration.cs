@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Epic;
 using Epic.Collections;
 
-namespace Epic.Extensions
+namespace System.Linq
 {
     /// <summary>
     /// 引用自 System.Data.Entity.ModelConfiguration.Utilities
@@ -23,9 +24,9 @@ namespace Epic.Extensions
 
         static void CheckParameter(object source, object dest, object equalityComparer)
         {
-            Errors.ArgumentNull("source", source);
-            Errors.ArgumentNull("dest", dest);
-            Errors.ArgumentNull("equalityComparer", equalityComparer);
+            Errors.CheckArgumentNull("source", source);
+            Errors.CheckArgumentNull("dest", dest);
+            Errors.CheckArgumentNull("equalityComparer", equalityComparer);
         }
 
         public static IEnumerable<T> Union<T>(this IEnumerable<T> source, IEnumerable<T> dest, Func<T, T, bool> equalityComparer, Func<T, int> getHashCode = null)
@@ -44,16 +45,6 @@ namespace Epic.Extensions
             if (source.Count() == 0) return dest;
             if (dest.Count() == 0) return source;
             return source.Intersect(dest, new DynamicEqualityComparer<T>(equalityComparer, getHashCode));
-        }
-
-        public static bool SequenceEqual<T>(this IEnumerable<T> source, IEnumerable<T> dest, Func<T, T, bool> equalityComparer) where T : class
-        {
-            if (source == null) return false;
-            if (dest == null) return false;
-            if (source.Count() == 0) return false;
-            if (dest.Count() == 0) return false;
-            if (equalityComparer == null) return false;
-            return source.SequenceEqual(dest, new DynamicEqualityComparer<T>(equalityComparer));
         }
 
     }
