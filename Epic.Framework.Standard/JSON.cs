@@ -53,6 +53,8 @@ namespace Epic
 
         public static T Read<T>(string path)
         {
+            if (!File.Exists(path)) return default(T);
+
             using (var stream = File.OpenRead(path))
             {
                 return Parse<T>(stream);

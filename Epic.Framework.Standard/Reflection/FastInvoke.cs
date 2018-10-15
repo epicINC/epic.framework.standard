@@ -12,13 +12,51 @@ namespace Epic.Reflection
     /// </summary>
     public static class FastInvoke
     {
-        public static Action<object, object[]> Create(MethodInfo value)
+        public static Func<object, object[], object> MethodProxy(Delegate value)
+        {
+            return MethodProxy(value.Method);
+        }
+
+        public static Func<object, object[], object> MethodProxy(MethodInfo value)
         {
             var dynamicMethod = new DynamicMethod(String.Empty, typeof(object), new Type[] { typeof(object), typeof(object[]) }, value.DeclaringType.Module);
-            var il = dynamicMethod.GetILGenerator();
+            BuildProxy(value, dynamicMethod.GetILGenerator());
+            return dynamicMethod.CreateDelegate<Func<object, object[], object>>();
+        }
+
+        /*
+        public static Func<object, object[], object> MethodProxyS(MethodInfo value)
+        {
+            var assemblyName = new AssemblyName("ProxyAssembly");
+            assemblyName.Version = new Version("1.0.0");
+            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
+
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule("ProxyModule", "DynamicProxy.dll");
+
+            TypeBuilder builder = moduleBuilder.DefineType("Test", TypeAttributes.Public);
+            var methodBuilder = builder.DefineMethod("DynamicCreate", MethodAttributes.Public | MethodAttributes.Static, typeof(object), new Type[] { typeof(object), typeof(object[]) });
+
+            BuildProxy(value, methodBuilder.GetILGenerator());
+
+            builder.CreateType();
+            assemblyBuilder.Save("DynamicProxy.dll");
+
+            return (Func<object, object[], object>)methodBuilder.CreateDelegate(typeof(Func<object, object[], object>));
+        }
+        */
+
+
+        static void BuildProxy(MethodInfo value, ILGenerator il)
+        {
             var parameters = value.GetParameters();
             var parameterTypes = parameters.Select(e => e.ParameterType.IsByRef ? e.ParameterType.GetElementType() : e.ParameterType).ToArray();
-            var locals = parameterTypes.Select(e => il.DeclareLocal(e, true)).ToArray();
+
+
+            il.DeclareLocal(typeof(object));
+
+            il.Emit(OpCodes.Nop);
+            if (!value.IsStatic)
+                il.Emit(OpCodes.Ldarg_0);
 
             for (int i = 0; i < parameterTypes.Length; i++)
             {
@@ -26,17 +64,6 @@ namespace Epic.Reflection
                 Ldc(il, i);
                 il.Emit(OpCodes.Ldelem_Ref);
                 Unbox(il, parameterTypes[i]);
-                il.Emit(OpCodes.Stloc, locals[i]);
-            }
-            if (!value.IsStatic)
-                il.Emit(OpCodes.Ldarg_0);
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                if (parameters[i].ParameterType.IsByRef)
-                    il.Emit(OpCodes.Ldloca_S, locals[i]);
-                else
-                    il.Emit(OpCodes.Ldloc, locals[i]);
             }
 
             if (value.IsStatic)
@@ -44,24 +71,16 @@ namespace Epic.Reflection
             else
                 il.EmitCall(OpCodes.Callvirt, value, null);
 
-            if (value.ReturnType == typeof(void))
-                il.Emit(OpCodes.Ldnull);
-            else
-                Box(il, value.ReturnType);
-
-            for (int i = 0; i < parameters.Length; i++)
+            if (value.ReturnType != typeof(void))
             {
-                if (!parameters[i].ParameterType.IsByRef) continue;
-                il.Emit(OpCodes.Ldarg_1);
-                Ldc(il, i);
-                il.Emit(OpCodes.Ldloc, locals[i]);
-                if (!locals[i].LocalType.IsValueType)
-                    il.Emit(OpCodes.Box, locals[i].LocalType);
-                il.Emit(OpCodes.Stelem_Ref);
-
+                Box(il, value.ReturnType);
+                il.Emit(OpCodes.Stloc_0);
+                il.Emit(OpCodes.Ldloc_0);
             }
+            else
+                il.Emit(OpCodes.Ldnull);
+
             il.Emit(OpCodes.Ret);
-            return (Action<object, object[]>)dynamicMethod.CreateDelegate(typeof(Action<object, object[]>));
 
         }
 
@@ -104,7 +123,7 @@ namespace Epic.Reflection
             }
 
             if (value > -129 && value < 128)
-                il.Emit(OpCodes.Ldc_I4_S, (SByte)value);
+                il.Emit(OpCodes.Ldc_I4_S, (sbyte)value);
             else
                 il.Emit(OpCodes.Ldc_I4, value);
         }

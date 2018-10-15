@@ -8,21 +8,42 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Epic.Extensions;
 using DevTest.Events;
+using DevTest.Reflection;
 
 namespace DevTest
 {
- 
+    [Flags]
+    public enum DeviceType
+    {
+        /// <summary>
+        /// 条码扫码仪
+        /// </summary>
+        CodeSanner = 1 << 1,
+
+        /// <summary>
+        /// IC读卡器
+        /// </summary>
+        ICCardReader = 1 << 2,
+
+        /// <summary>
+        /// 人脸识别
+        /// </summary>
+        Camera = 1 << 3,
+        ManualInput
+
+    }
 
     class Program
     {
 
 
 
+
+
         static void RunSnippet(string[] args)
         {
 
-           EventEmitterTest.Combine();
-
+            SymmetricAlgorithmTest.Test();
 
         }
 

@@ -1,0 +1,211 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Epic.WPF.Controls;assembly=Epic.WPF.Controls">
+
+    <Color x:Key="Button">#57a3f3</Color>
+    <SolidColorBrush x:Key="Button Brush" Color="{StaticResource Button}" />
+
+    <Color x:Key="Info Hightlight">#57c5f7</Color>
+    <SolidColorBrush x:Key="Info Hightlight Brush" Color="{StaticResource Info Hightlight}" />
+    
+    <Color x:Key="Success Hightlight">#47cb89</Color>
+    <SolidColorBrush x:Key="Success Hightlight Brush" Color="{StaticResource Success Hightlight}" />
+
+    <Color x:Key="Warning Hightlight">#ffad33</Color>
+    <SolidColorBrush x:Key="Warning Hightlight Brush" Color="{StaticResource Warning Hightlight}" />
+
+    <Color x:Key="Error Hightlight">#f16643</Color>
+    <SolidColorBrush x:Key="Error Hightlight Brush" Color="{StaticResource Error Hightlight}" />
+
+
+
+    
+    <Style TargetType="{x:Type local:Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="15,5,15,6" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:Button}">
+                    <Border
+                        Margin="{TemplateBinding Margin}"
+                        Padding="{TemplateBinding Padding}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        CornerRadius="{TemplateBinding CornerRadius}" 
+                        Background="{TemplateBinding Background}"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}" 
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        >
+
+                        <TextBlock
+                            Foreground="{TemplateBinding Foreground}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            DataContext="{TemplateBinding DataContext}"
+                            Text="{TemplateBinding Content}" />
+                    </Border>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Type" Value="Default">
+                <Setter Property="Foreground" Value="{DynamicResource Content Brush}" />
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource Border Brush}" />
+                <Setter Property="BorderThickness" Value="1"/>
+            </Trigger>
+            <Trigger Property="Type" Value="Primary">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="{DynamicResource Primary Brush}" />
+                <Setter Property="BorderThickness" Value="1"/>
+            </Trigger>
+            <Trigger Property="Type" Value="Dashed">
+                <Setter Property="Foreground" Value="{DynamicResource Content Brush}" />
+                <Setter Property="Background" Value="White" />
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,2" EndPoint="3,0" SpreadMethod="Repeat" MappingMode="Absolute">
+                            <GradientStop Color="{DynamicResource Content}" Offset="0" />
+                            <GradientStop Color="{DynamicResource Content}" Offset="0.6" />
+                            <GradientStop Color="Transparent" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Type" Value="Text">
+                <Setter Property="Foreground" Value="{DynamicResource Content Brush}" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Trigger>
+            <Trigger Property="Type" Value="Info">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource Info Brush}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Success">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource Success Brush}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Warning">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource Warning Brush}" />
+            </Trigger>
+            <Trigger Property="Type" Value="Error">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="{DynamicResource Error Brush}" />
+            </Trigger>
+            <Trigger Property="Size" Value="Default">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Padding" Value="15,5,15,6" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Trigger>
+            <Trigger Property="Size" Value="Large">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Padding" Value="15,6" />
+                <Setter Property="CornerRadius" Value="4" />
+            </Trigger>
+            <Trigger Property="Size" Value="Small">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Padding" Value="7,1,7,2" />
+                <Setter Property="CornerRadius" Value="3" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition  Property="Type" Value="Default" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource Button Brush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource Button Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Primary" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource Button Brush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource Button Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Dashed" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource Button Brush}" />
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,2" EndPoint="3,0" SpreadMethod="Repeat" MappingMode="Absolute">
+                                <GradientStop Color="{DynamicResource Button}" Offset="0" />
+                                <GradientStop Color="{DynamicResource Button}" Offset="0.6" />
+                                <GradientStop Color="Transparent" Offset="1" />
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Text" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Foreground" Value="{DynamicResource Dark Primary Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Info" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource Info Hightlight Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Success" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource Success Hightlight Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Warning" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource Warning Hightlight Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="Type" Value="Error" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource Error Hightlight Brush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    
+</ResourceDictionary>

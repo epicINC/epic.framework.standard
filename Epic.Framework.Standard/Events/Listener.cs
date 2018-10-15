@@ -14,58 +14,47 @@ namespace Epic.Events
             this.Action = action;
         }
 
-
-
         public void Invoke(params object[] args)
         {
-            if (this.Count < 3)
-            {
+            if (this.Count > -1)
                 this.DynamicInvoke(args);
-                this.Count++;
-                this.OnInvoked();
-                return;
-            }
+            else
+                this.FastInvoke(args);
 
-            this.FastInvoke(args);
             this.Count++;
             this.OnInvoked();
         }
 
         void DynamicInvoke(params object[] args)
         {
-            if (this.Parameters.Length == 0)
-            {
-                this.Action.DynamicInvoke();
-                return;
-            }
-            if (this.IsSame(args))
-            {
-                this.Action.DynamicInvoke(args);
-                return;
-            }
-
-            this.Action.DynamicInvoke(new object[this.Parameters.Length]);
+            this.Action.DynamicInvoke(this.MakeArgs(args));
         }
 
         void FastInvoke(params object[] args)
         {
             if (this.FastAction == null)
-                this.FastAction = Epic.Reflection.FastInvoke.Create(this.Method);
+                this.FastAction = Epic.Reflection.FastInvoke.MethodProxy(this.Method);
 
-            if (this.Parameters.Length == 0)
-            {
-                this.FastAction(null, null);
-                return;
-            }
-            if (this.IsSame(args))
-            {
-                this.FastAction(null, args);
-                return;
-            }
-
-            this.FastAction(null, new object[this.Parameters.Length]);
+            if (this.Action != null)
+                this.FastAction(this.Action, this.MakeArgs(args));
+            else
+                this.FastAction(this.Method, this.MakeArgs(args));
         }
 
+        object[] MakeArgs(object[] args)
+        {
+            if (this.Parameters.Length == 0) return null;
+            if (this.IsSame(args)) return args;
+            var result = new object[this.Parameters.Length];
+            var count = args.Length < result.Length ? args.Length : result.Length;
+            for (var i = 0; i < count; i++)
+            {
+                if (this.parameters[i].ParameterType != args[i].GetType()) continue;
+                result[i] = args[i];
+            }
+            return result;
+        }
+ 
         public event Action Invoked;
         void OnInvoked()
         {
@@ -81,7 +70,7 @@ namespace Epic.Events
 
 
         public Delegate Action { get; private set; }
-        Action<object, object[]> FastAction { get; set; }
+        Func<object, object[], object> FastAction { get; set; }
 
 
         MethodInfo method;

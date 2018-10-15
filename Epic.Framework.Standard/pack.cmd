@@ -1,1 +1,1 @@
-nuget pack -build -properties Configuration=Release
+nuget pack -build -properties Configuration=Release  -properties langversion=latest

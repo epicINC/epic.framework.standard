@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:m="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:Epic.WPF.Controls.Themes">
+
+
+    <Color x:Key="Primary">#2d8cf0</Color>
+    <Color x:Key="Light Primary">#5cadff</Color>
+    <Color x:Key="Dark Primary">#2b85e4</Color>
+    <Color x:Key="Info">#2db7f5</Color>
+    <Color x:Key="Success">#19be6b</Color>
+    <Color x:Key="Warning">#ff9900</Color>
+    <Color x:Key="Error">#ed4014</Color>
+    <Color x:Key="Title">#17233d</Color>
+    <Color x:Key="Content">#515a6e</Color>
+    <Color x:Key="Sub Color">#808695</Color>
+    <Color x:Key="Disabled">#c5c8ce</Color>
+    <Color x:Key="Border">#dcdee2</Color>
+    <Color x:Key="Divider">#e8eaec</Color>
+    <Color x:Key="Background">#f8f8f9</Color>
+
+
+    <SolidColorBrush x:Key="Primary Brush" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="Light Primary Brush" Color="{StaticResource Light Primary}" />
+    <SolidColorBrush x:Key="Dark Primary Brush" Color="{StaticResource Dark Primary}" />
+    <SolidColorBrush x:Key="Info Brush" Color="{StaticResource Info}" />
+    <SolidColorBrush x:Key="Success Brush" Color="{StaticResource Success}" />
+    <SolidColorBrush x:Key="Warning Brush" Color="{StaticResource Warning}" />
+    <SolidColorBrush x:Key="Error Brush" Color="{StaticResource Error}" />
+    <SolidColorBrush x:Key="Title Brush" Color="{StaticResource Title}" />
+    <SolidColorBrush x:Key="Content Brush" Color="{StaticResource Content}" />
+    <SolidColorBrush x:Key="Sub Brush" Color="{StaticResource Sub}" />
+    <SolidColorBrush x:Key="Disabled Brush" Color="{StaticResource Disabled}" />
+    <SolidColorBrush x:Key="Border Brush" Color="{StaticResource Border}" />
+    <SolidColorBrush x:Key="Divider Brush" Color="{StaticResource Divider}" />
+    <SolidColorBrush x:Key="Background Brush" Color="{StaticResource Background}" />
+
+
+</ResourceDictionary>

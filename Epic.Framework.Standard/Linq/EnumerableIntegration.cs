@@ -82,6 +82,16 @@ namespace System.Linq
         }
 
 
+        public static bool Contains<T>(this IEnumerable<T> value, Func<T, bool> comparer)
+        {
+            foreach (var item in value)
+            {
+                if (comparer(item)) return true;
+            }
+            return false;
+        }
+
+
 
         public static IEnumerable<T> Intersect<T>(this IEnumerable<T> source, IEnumerable<T> target, Func<T, T, bool> comparer)
         {
@@ -175,6 +185,7 @@ namespace System.Linq
         {
             return left.SelectMany(e => right, selector);
         }
+
 
     }
 }

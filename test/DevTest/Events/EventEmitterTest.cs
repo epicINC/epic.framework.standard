@@ -9,23 +9,26 @@ namespace DevTest.Events
     {
         public static void Combine()
         {
+            test();
+        }
+
+
+        static void test()
+        {
             var e = new EventEmitter();
-            Action a1;
-            e.On("event", a1 = () =>
-            {
-                Console.WriteLine("no arg");
-            });
+
             e.On("event", (bool value) =>
             {
-                Console.WriteLine("arg1");
-            });
-            e.On("event", (bool value, string a) =>
-            {
                 Console.WriteLine(value);
-                Console.WriteLine(a);
             });
-            e.Off("event", a1);
+
             e.Emit("event", true);
+            e.Emit("event", false);
+
+            e.Emit("event", true);
+            e.Emit("event", false, "adfad");
         }
+
+
     }
 }
