@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using Epic.Extensions;
 using DevTest.Events;
 using DevTest.Reflection;
+using DevTest.Extensions;
 
 namespace DevTest
 {
@@ -43,7 +44,7 @@ namespace DevTest
         static void RunSnippet(string[] args)
         {
 
-            SymmetricAlgorithmTest.Test();
+            HttpTest.Test();
 
         }
 

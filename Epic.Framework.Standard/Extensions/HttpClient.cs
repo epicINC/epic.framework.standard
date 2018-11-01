@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -11,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace Epic.Extensions
 {
+
+
+
+  
+
     public static class HttpClientExtensions
     {
         #region Authorization
@@ -33,28 +39,19 @@ namespace Epic.Extensions
 
         #endregion
 
-
-        public static async Task<HttpResponseMessage> SendAsync(this HttpClient client, HttpRequestMessage request, CancellationToken cancellationToken)
+        public static bool IsSuccessStatusCode(this HttpStatusCode? value)
         {
-            return await client.SendAsync(request, cancellationToken);
+            return (value != null && value >= HttpStatusCode.OK && value <= (HttpStatusCode)299);
         }
 
-
-        public static async Task<T> JsonResult<T>(this HttpResponseMessage response)
+        public static bool IsSuccessStatusCode<T>(this (T Data, HttpStatusCode? StatusCode) value)
         {
-            if (!response.IsSuccessStatusCode) return default(T);
-            return await ReadAsJsonAsync<T>(response.Content);
-        }
-
-        public static async Task<T> JsonResult<T>(this Task<HttpResponseMessage> value)
-        {
-            var response = await value;
-            if (!response.IsSuccessStatusCode) return default(T);
-            return await ReadAsJsonAsync<T>(response.Content);
+            return IsSuccessStatusCode(value.StatusCode);
         }
 
         public static async Task<T> ReadAsJsonAsync<T>(this HttpContent value)
         {
+            if (value == null) return default;
             using (var stream = await value.ReadAsStreamAsync())
             {
                 return JSON.Parse<T>(stream);
@@ -64,15 +61,73 @@ namespace Epic.Extensions
         static Uri CreateUri(string value)
         {
             if (String.IsNullOrEmpty(value)) return null;
-            return new Uri(value, UriKind.RelativeOrAbsolute);
+            Uri.TryCreate(value, UriKind.RelativeOrAbsolute, out Uri result);
+            return result;
         }
 
+
+        #region TryJsonResult
+
+        public static async Task<T> TryJsonResult<T>(this HttpResponseMessage response)
+        {
+            if (response == null || !response.IsSuccessStatusCode) return default;
+            return await ReadAsJsonAsync<T>(response.Content);
+        }
+
+        public static async Task<T> TryJsonResult<T>(this Task<HttpResponseMessage> value)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await value;
+            }
+            catch (HttpRequestException)
+            {
+                response = null;
+            }
+            catch (Exception)
+            {
+                response = null;
+            }
+            return await TryJsonResult<T>(response);
+        }
+
+        #endregion
+
+        #region JsonResult
+
+        public static async Task<(T Data, HttpStatusCode? StatusCode)> JsonResult<T>(this HttpResponseMessage response)
+        {
+            if (response == null) return (default, null);
+            if (!response.IsSuccessStatusCode) return (default, response.StatusCode);
+            return (await ReadAsJsonAsync<T>(response.Content), response.StatusCode);
+        }
+
+        public static async Task<(T Data, HttpStatusCode? StatusCode)> JsonResult<T>(this Task<HttpResponseMessage> value)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await value;
+            }
+            catch (HttpRequestException)
+            {
+                response = null;
+            }
+            catch (Exception)
+            {
+                response = null;
+            }
+            return await JsonResult<T>(response);
+        }
+
+        #endregion
 
         #region Get Json Async
 
 
 
-        public static Task<HttpResponseMessage> GetAsync<T>(this HttpClient client, Uri requestUri, T query) where T : class
+        public static async Task<HttpResponseMessage> GetAsync<T>(this HttpClient client, Uri requestUri, T query) where T : class
         {
             var builder = new UriBuilder(requestUri.IsAbsoluteUri ? requestUri : new Uri(client.BaseAddress, requestUri));
 
@@ -86,7 +141,19 @@ namespace Epic.Extensions
 
             builder.Query = JQueryString.Stirngify(dictionary);
 
-            return client.GetAsync(builder.Uri);
+            try
+            {
+                return await client.GetAsync(builder.Uri);
+            }
+            catch (HttpRequestException)
+            {
+
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         
         #endregion
@@ -110,58 +177,77 @@ namespace Epic.Extensions
 
         #endregion
 
-
-
-
         #region PostFormAsync
 
-
-        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value)
+        public static async Task<HttpResponseMessage> PostFormAsync(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value)
         {
-            return PostFormAsync(client, CreateUri(requestUri), value, CancellationToken.None);
+            return await PostFormAsync(client, CreateUri(requestUri), value, CancellationToken.None);
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value)
+        public static async Task<HttpResponseMessage> PostFormAsync(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value)
         {
-            return PostFormAsync(client, requestUri, value, CancellationToken.None);
+            return await PostFormAsync(client, requestUri, value, CancellationToken.None);
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
+        public static async Task<HttpResponseMessage> PostFormAsync(this HttpClient client, string requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
         {
-            return PostFormAsync(client, CreateUri(requestUri), value, cancellationToken);
+            return await PostFormAsync(client, CreateUri(requestUri), value, cancellationToken);
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
+        public static async Task<HttpResponseMessage> PostFormAsync(this HttpClient client, Uri requestUri, IEnumerable<KeyValuePair<string, object>> value, CancellationToken cancellationToken)
         {
-            return client.PostAsync(requestUri, ParseFormContent(value), cancellationToken);
+            try
+            {
+                return await client.PostAsync(requestUri, ParseFormContent(value), cancellationToken);
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, string requestUri, T value) where T : class
+        public static async Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, string requestUri, T value) where T : class
         {
             if (value is IEnumerable<KeyValuePair<string, object>> collection)
-                return PostFormAsync(client, requestUri, collection, CancellationToken.None);
-            return PostFormAsync(client, CreateUri(requestUri), value, CancellationToken.None);
+                return await PostFormAsync(client, requestUri, collection, CancellationToken.None);
+            return await PostFormAsync(client, CreateUri(requestUri), value, CancellationToken.None);
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, Uri requestUri, T value) where T : class
+        public static async Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, Uri requestUri, T value) where T : class
         {
             if (value is IEnumerable <KeyValuePair<string, object>> collection)
-                return PostFormAsync(client, requestUri, collection, CancellationToken.None);
-            return PostFormAsync(client, requestUri, value, CancellationToken.None);
+                return await PostFormAsync(client, requestUri, collection, CancellationToken.None);
+            return await PostFormAsync(client, requestUri, value, CancellationToken.None);
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, string requestUri, T value, CancellationToken cancellationToken) where T : class
+        public static async Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, string requestUri, T value, CancellationToken cancellationToken) where T : class
         {
             if (value is IEnumerable<KeyValuePair<string, object>> collection)
-                return PostFormAsync(client, CreateUri(requestUri), collection, CancellationToken.None);
-            return PostFormAsync(client, CreateUri(requestUri), value, cancellationToken);
+                return await PostFormAsync(client, CreateUri(requestUri), collection, CancellationToken.None);
+            return await PostFormAsync(client, CreateUri(requestUri), value, cancellationToken);
         }
 
-        public static Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, Uri requestUri, T value, CancellationToken cancellationToken) where T : class
+        public static async Task<HttpResponseMessage> PostFormAsync<T>(this HttpClient client, Uri requestUri, T value, CancellationToken cancellationToken) where T : class
         {
             if (value is IEnumerable<KeyValuePair<string, object>> collection)
-                return PostFormAsync(client, requestUri, collection, CancellationToken.None);
-            return client.PostAsync(requestUri, ParseFormContent(value), cancellationToken);
+                return await PostFormAsync(client, requestUri, collection, CancellationToken.None);
+            try
+            {
+
+                return await client.PostAsync(requestUri, ParseFormContent(value), cancellationToken);
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         #endregion

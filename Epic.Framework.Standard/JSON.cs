@@ -26,10 +26,18 @@ namespace Epic
 
         public static object Parse(Stream value, Type objectType)
         {
-            using (var sr = new StreamReader(value))
+            try
             {
-                return (new JsonSerializer()).Deserialize(sr, objectType);
+                using (var sr = new StreamReader(value))
+                {
+                    return (new JsonSerializer()).Deserialize(sr, objectType);
+                }
             }
+            catch (Exception)
+            {
+                return null;
+            }
+  
         }
 
         public static object Parse(byte[] value, Type objectType)
