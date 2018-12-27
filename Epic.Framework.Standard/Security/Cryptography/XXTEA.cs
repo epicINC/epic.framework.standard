@@ -6,14 +6,24 @@ using System.Text;
 namespace Epic.Security.Cryptography
 {
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <ref>
+    /// https://github.com/xxtea/xxtea-dotnet/blob/master/XXTEA/XXTEA.cs
+    /// https://www.cnblogs.com/linzheng/archive/2011/09/14/2176767.html
+    /// https://github.com/beichenzhizuoshi/XXTEADecrypt/blob/65816df84cd43aab66f6ea8b917b9bdaa57962ee/XXTEADecrypt/XXTEAHelp.cs
+    /// c++
+    /// http://www.cnblogs.com/chevin/p/5681228.html
+    /// https://www.cnblogs.com/huhu0013/p/3334890.html
+    /// </ref>
     public static class XXTEA
     {
         // Methods
-        public static byte[] Decrypt(byte[] key, byte[] Data)
+        public static byte[] Decrypt(byte[] key, byte[] data)
         {
-            if (Data.Length == 0)
-                return Data;
-            return ToByteArray(Decrypt(ToUInt32Array(Data, false), ToUInt32Array(key, false)), true);
+            if (data.Length == 0) return data;
+            return ToByteArray(Decrypt(ToUInt32Array(data, false), ToUInt32Array(key, false)), true);
         }
 
         public static uint[] Decrypt(uint[] v, uint[] k)
@@ -48,11 +58,11 @@ namespace Epic.Security.Cryptography
             return v;
         }
 
-        public static byte[] Encrypt(byte[] Key, byte[] Data)
+        public static byte[] Encrypt(byte[] key, byte[] data)
         {
-            if (Data.Length == 0)
-                return Data;
-            return ToByteArray(Encrypt(ToUInt32Array(Data, true), ToUInt32Array(Key, false)), false);
+            if (data.Length == 0)
+                return data;
+            return ToByteArray(Encrypt(ToUInt32Array(data, true), ToUInt32Array(key, false)), false);
         }
 
         public static uint[] Encrypt(uint[] v, uint[] k)
@@ -89,34 +99,34 @@ namespace Epic.Security.Cryptography
             return v;
         }
 
-        private static byte[] ToByteArray(uint[] Data, bool IncludeLength)
+        private static byte[] ToByteArray(uint[] data, bool includeLength)
         {
-            int n = IncludeLength ? ((int)Data[Data.Length - 1]) : (Data.Length << 2);
+            int n = includeLength ? ((int)data[data.Length - 1]) : (data.Length << 2);
             byte[] Result = new byte[n];
             for (int i = 0; i < n; i++)
             {
-                Result[i] = (byte)(Data[i >> 2] >> ((i & 3) << 3));
+                Result[i] = (byte)(data[i >> 2] >> ((i & 3) << 3));
             }
             return Result;
         }
 
-        private static uint[] ToUInt32Array(byte[] Data, bool IncludeLength)
+        private static uint[] ToUInt32Array(byte[] data, bool includeLength)
         {
             uint[] Result;
-            int n = ((Data.Length & 3) == 0) ? (Data.Length >> 2) : ((Data.Length >> 2) + 1);
-            if (IncludeLength)
+            int n = ((data.Length & 3) == 0) ? (data.Length >> 2) : ((data.Length >> 2) + 1);
+            if (includeLength)
             {
                 Result = new uint[n + 1];
-                Result[n] = (uint)Data.Length;
+                Result[n] = (uint)data.Length;
             }
             else
             {
                 Result = new uint[n];
             }
-            n = Data.Length;
+            n = data.Length;
             for (int i = 0; i < n; i++)
             {
-                Result[i >> 2] |= (uint)(Data[i] << ((i & 3) << 3));
+                Result[i >> 2] |= (uint)(data[i] << ((i & 3) << 3));
             }
             return Result;
         }

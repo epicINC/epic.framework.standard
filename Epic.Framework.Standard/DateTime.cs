@@ -9,12 +9,17 @@ namespace Epic
     {
         public static long Now()
         {
-            return ((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
+            return DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        }
+
+        public static long To(DateTime value)
+        {
+            return ((DateTimeOffset)value).ToUniversalTime().ToUnixTimeMilliseconds();
         }
 
         public static DateTime From(long value)
         {
-            return DateTimeOffset.FromUnixTimeMilliseconds(value).DateTime;
+            return DateTimeOffset.FromUnixTimeMilliseconds(value).DateTime.ToLocalTime();
         }
     }
 }

@@ -1,0 +1,1 @@
+NuGet.exe push Epic.Framework.Standard.1.0.14.nupkg CeqbEQTrCs3Fz9yI3XWy -Source https://npm.eastfair.com/nuget/nuget/

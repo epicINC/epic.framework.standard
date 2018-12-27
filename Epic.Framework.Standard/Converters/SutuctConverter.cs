@@ -22,7 +22,7 @@ namespace Epic.Converters
             }
             finally
             {
-                if (handle.IsAllocated) handle.Free();
+                if (handle != null && handle.IsAllocated) handle.Free();
             }
             return result;
         }
@@ -37,7 +37,7 @@ namespace Epic.Converters
             }
             finally
             {
-                if (handle.IsAllocated) handle.Free();
+                if (handle != null && handle.IsAllocated) handle.Free();
             }
         }
         

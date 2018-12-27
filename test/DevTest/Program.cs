@@ -10,6 +10,7 @@ using Epic.Extensions;
 using DevTest.Events;
 using DevTest.Reflection;
 using DevTest.Extensions;
+using System.Text;
 
 namespace DevTest
 {
@@ -34,8 +35,11 @@ namespace DevTest
 
     }
 
+
+
     class Program
     {
+
 
 
 
@@ -44,7 +48,23 @@ namespace DevTest
         static void RunSnippet(string[] args)
         {
 
-            HttpTest.Test();
+
+            return;
+
+            SymmetricAlgorithmTest.Test();
+            return;
+
+
+            var text = "encode text valuefasdfasdfasdfaewe53253";
+            var key = "testkey123456789";
+            // TExuOaf8aXJsfZE6ojWJZXKiS0jQri8/iNIj/4omWRB4Jurkm7mG7eljT94=
+            var result = Epic.Security.Cryptography.XXTEA.Encrypt(Encoding.UTF8.GetBytes(key), Encoding.UTF8.GetBytes(text));
+            WL(result.Length);
+            WL(Convert.ToBase64String(result));
+
+            var result1 = Epic.Security.Cryptography.XXTEA2.Test(text);
+            WL(Convert.ToBase64String(result1));
+            //SymmetricAlgorithmTest.Test();
 
         }
 

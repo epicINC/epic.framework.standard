@@ -8,7 +8,7 @@ using Epic.Extensions;
 
 namespace Epic.Framework.Test.Extensions
 {
-/*
+
     [TestClass]
     public class EnumerableTest
     {
@@ -119,5 +119,4 @@ namespace Epic.Framework.Test.Extensions
             CollectionAssert.AreEqual(actual.ToList(), expected.ToList());
         }
     }
-    */
 }

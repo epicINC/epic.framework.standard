@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Epic.Security.Cryptography;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -8,17 +9,21 @@ namespace DevTest
 {
     class SymmetricAlgorithmTest
     {
+
         public static void Test()
         {
+
             AlgorithmTest<DESCryptoServiceProvider>();
             AlgorithmTest<RC2CryptoServiceProvider>();
             AlgorithmTest<RijndaelManaged>();
             AlgorithmTest<TripleDESCryptoServiceProvider>();
 
             AlgorithmTest<AesManaged>();
+            TeaTest();
+
         }
 
-        static string original = "id=62015836&n=张钢&c=北京昆仑亿发科技股份有限公司&p=董事长&=a=中国 北京+Beijing China&i=专业刊物/网络媒体+Publication/ Online media&r=5554";
+        static string original = "id=62015836&n=张钢&c=北京昆仑亿发科技股份有限公司&p=董事长r=1541748819122";
 
 
         internal static void AlgorithmTest<T>() where T : SymmetricAlgorithm, new()
@@ -33,6 +38,7 @@ namespace DevTest
                 string base64 = Convert.ToBase64String(encrypted);
                 //Display the original data and the decrypted data.
                 Console.WriteLine($"{typeof(T).Name}:");
+                Console.WriteLine("Key:   {0}", crypto.Key.Length);
                 Console.WriteLine("Byte:   {0}", encrypted.Length);
                 Console.WriteLine("Hex:   {0}, {1}", hex.Length, hex);
                 Console.WriteLine("Base64:   {0}, {1}", base64.Length, base64);
@@ -41,10 +47,26 @@ namespace DevTest
             }
         }
 
+        static void TeaTest()
+        {
+            var key = Encoding.UTF8.GetBytes("288A339E65244CC995154A686C651B1E");
+            var encrypted = XXTEA.Encrypt(key, Encoding.UTF8.GetBytes(original));
+            string roundtrip = Encoding.UTF8.GetString(XXTEA.Decrypt(key, encrypted));
+            string hex = Epic.Converters.HexString.Encode(encrypted);
+            string base64 = Convert.ToBase64String(encrypted);
+            //Display the original data and the decrypted data.
+            Console.WriteLine($"Tea:");
+            Console.WriteLine("Key:   {0}", key.Length);
+            Console.WriteLine("Byte:   {0}", encrypted.Length);
+            Console.WriteLine("Hex:   {0}, {1}", hex.Length, hex);
+            Console.WriteLine("Base64:   {0}, {1}", base64.Length, base64);
+            Console.WriteLine("Decode: {0}", roundtrip);
+            Console.WriteLine();
+        }
         
 
 
-        static byte[] Encrypt<T>(string plainText, byte[] Key, byte[] IV) where T : SymmetricAlgorithm, new()
+        internal static byte[] Encrypt<T>(string plainText, byte[] Key, byte[] IV) where T : SymmetricAlgorithm, new()
         {
             // Check arguments.
             if (plainText == null || plainText.Length <= 0)
@@ -80,7 +102,7 @@ namespace DevTest
 
         }
 
-        static string Decrypt<T>(byte[] cipherText, byte[] Key, byte[] IV) where T : SymmetricAlgorithm, new()
+        internal static string Decrypt<T>(byte[] cipherText, byte[] Key, byte[] IV) where T : SymmetricAlgorithm, new()
         {
             if (cipherText == null || cipherText.Length <= 0)
                 throw new ArgumentNullException("cipherText");
