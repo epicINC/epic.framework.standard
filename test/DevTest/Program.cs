@@ -48,6 +48,7 @@ namespace DevTest
         static void RunSnippet(string[] args)
         {
 
+            HttpTest.Test();
 
             return;
 

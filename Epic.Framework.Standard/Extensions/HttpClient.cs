@@ -244,7 +244,7 @@ namespace Epic.Extensions
             {
                 return null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
