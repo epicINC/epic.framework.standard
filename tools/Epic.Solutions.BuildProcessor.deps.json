@@ -1,22 +1,20 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v2.0",
-    "signature": "00d71c9be8fabc67e08a6cc87f7a08003516bc6a"
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "4209a0db79ca710ad10a91c53625dabaa16cfe26"
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v2.0": {
+    ".NETCoreApp,Version=v2.2": {
       "Epic.Solutions.BuildProcessor/1.0.0": {
         "dependencies": {
-          "Mono.Cecil": "0.10.0",
-          "NETStandard.Library": "2.0.2"
+          "Mono.Cecil": "0.10.1"
         },
         "runtime": {
           "Epic.Solutions.BuildProcessor.dll": {}
         }
       },
-      "Microsoft.NETCore.Targets/1.0.1": {},
-      "Mono.Cecil/0.10.0": {
+      "Mono.Cecil/0.10.1": {
         "dependencies": {
           "System.Collections": "4.0.11",
           "System.IO.FileSystem": "4.0.1",
@@ -29,32 +27,26 @@
         },
         "runtime": {
           "lib/netstandard1.3/Mono.Cecil.Mdb.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
+            "assemblyVersion": "0.10.1.0",
+            "fileVersion": "0.10.1.0"
           },
           "lib/netstandard1.3/Mono.Cecil.Pdb.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
+            "assemblyVersion": "0.10.1.0",
+            "fileVersion": "0.10.1.0"
           },
           "lib/netstandard1.3/Mono.Cecil.Rocks.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
+            "assemblyVersion": "0.10.1.0",
+            "fileVersion": "0.10.1.0"
           },
           "lib/netstandard1.3/Mono.Cecil.dll": {
-            "assemblyVersion": "0.10.0.0",
-            "fileVersion": "0.10.0.0"
+            "assemblyVersion": "0.10.1.0",
+            "fileVersion": "0.10.1.0"
           }
         }
       },
-      "NETStandard.Library/2.0.2": {},
-      "runtime.native.System.Security.Cryptography/4.0.0": {
-        "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1"
-        }
-      },
+      "runtime.native.System.Security.Cryptography/4.0.0": {},
       "System.Collections/4.0.11": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
@@ -74,25 +66,21 @@
       },
       "System.Diagnostics.Debug/4.0.11": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
       "System.Diagnostics.Tracing/4.1.0": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
       "System.Globalization/4.0.11": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
       "System.IO/4.1.0": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0",
           "System.Text.Encoding": "4.0.11",
           "System.Threading.Tasks": "4.0.11"
@@ -100,7 +88,6 @@
       },
       "System.IO.FileSystem/4.0.1": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.IO": "4.1.0",
           "System.IO.FileSystem.Primitives": "4.0.1",
           "System.Runtime": "4.1.0",
@@ -125,7 +112,6 @@
       },
       "System.Reflection/4.1.0": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.IO": "4.1.0",
           "System.Reflection.Primitives": "4.0.1",
           "System.Runtime": "4.1.0"
@@ -133,38 +119,29 @@
       },
       "System.Reflection.Primitives/4.0.1": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
       "System.Resources.ResourceManager/4.0.1": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Globalization": "4.0.11",
           "System.Reflection": "4.1.0",
           "System.Runtime": "4.1.0"
         }
       },
-      "System.Runtime/4.1.0": {
-        "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1"
-        }
-      },
+      "System.Runtime/4.1.0": {},
       "System.Runtime.Extensions/4.1.0": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
       "System.Runtime.Handles/4.0.1": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
       "System.Runtime.InteropServices/4.1.0": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Reflection": "4.1.0",
           "System.Reflection.Primitives": "4.0.1",
           "System.Runtime": "4.1.0",
@@ -269,7 +246,6 @@
       },
       "System.Text.Encoding/4.0.11": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       },
@@ -281,7 +257,6 @@
       },
       "System.Threading.Tasks/4.0.11": {
         "dependencies": {
-          "Microsoft.NETCore.Targets": "1.0.1",
           "System.Runtime": "4.1.0"
         }
       }
@@ -293,26 +268,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.NETCore.Targets/1.0.1": {
+    "Mono.Cecil/0.10.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-rkn+fKobF/cbWfnnfBOQHKVKIOpxMZBvlSHkqDWgBpwGDcLRduvs3D9OLGeV6GWGvVwNlVi2CBbTjuPmtHvyNw==",
-      "path": "microsoft.netcore.targets/1.0.1",
-      "hashPath": "microsoft.netcore.targets.1.0.1.nupkg.sha512"
-    },
-    "Mono.Cecil/0.10.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-nHSF7wvyZRPAGXl49zgULPFubXHpsXlOH9RXFRUKb0TX0/tKkKljci6yBszVNI09PIDNQ8IP9WJTYvmBkMbbHw==",
-      "path": "mono.cecil/0.10.0",
-      "hashPath": "mono.cecil.0.10.0.nupkg.sha512"
-    },
-    "NETStandard.Library/2.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5hB7QTrTeMzV5xnTH4+zNBOGCD5/DcSVb3iPGgyta4Xje5AI2gJoeLnArlQCzxTbRVpx8YrjnjAmUhkxjbd2ZA==",
-      "path": "netstandard.library/2.0.2",
-      "hashPath": "netstandard.library.2.0.2.nupkg.sha512"
+      "sha512": "sha512-ZpklVgBklS7Rq3UQUzFZZvEpljrdyXxIbHKiZQJ4IMt4CAGYp7Z3mh5hNV4lT2e0CyTJ1Qb5ldNds0HzgYPlGw==",
+      "path": "mono.cecil/0.10.1",
+      "hashPath": "mono.cecil.0.10.1.nupkg.sha512"
     },
     "runtime.native.System.Security.Cryptography/4.0.0": {
       "type": "package",
