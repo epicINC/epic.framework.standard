@@ -16,7 +16,7 @@ namespace Epic.Security.Cryptography
     /// <summary>Implements a 16-bits cyclic redundancy check (CRC) hash algorithm.</summary>
     /// <remarks>This class is not intended to be used for security purposes. For security applications use MD5, SHA1, SHA256, SHA384, 
     /// or SHA512 in the System.Security.Cryptography namespace.</remarks>
-    public class CRC16 : HashAlgorithm
+    public class CRC16 : System.Security.Cryptography.HashAlgorithm
     {
 
         #region CONSTRUCTORS

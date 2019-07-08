@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Epic.Hardware.CIM
+{
+    public enum PrinterLanguageType : ushort
+    {
+        Other = 1,
+        Unknown = 2,
+        PCL = 3,
+        HPGL = 4,
+        PJL = 5,
+        PS = 6,
+        PSPrinter = 7,
+        IPDS = 8,
+        PPDS = 9,
+        EscapeP = 10,
+        Epson = 11,
+        DDIF = 12,
+        Interpress = 13,
+        ISO6429 = 14,
+        LineData = 15,
+        MODCA = 16,
+        REGIS = 17,
+        SCS = 18,
+        SPDL = 19,
+        TEK4014 = 20,
+        PDS = 21,
+        IGP = 22,
+        CodeV = 23,
+        DSCDSE = 24,
+        WPS = 25,
+        LN03 = 26,
+        CCITT = 27,
+        QUIC = 28,
+        CPAP = 29,
+        DecPPL = 30,
+        SimpleText = 31,
+        NPAP = 32,
+        DOC = 33,
+        imPress = 34,
+        Pinwriter = 35,
+        NPDL = 36,
+        NEC201PL = 37,
+        Automatic = 38,
+        Pages = 39,
+        LIPS = 40,
+        TIFF = 41,
+        Diagnostic = 42,
+        CaPSL = 43,
+        EXCL = 44,
+        LCDS = 45,
+        XES = 46,
+        MIME = 47,
+        XPS = 48,
+        HPGL2 = 49,
+        PCLXL = 50
+    }
+}

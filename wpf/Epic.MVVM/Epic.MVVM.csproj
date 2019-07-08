@@ -50,6 +50,7 @@
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Converters\DelegateConverter.cs" />
     <Compile Include="Converters\ReverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ReverseVisibilityConverter.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

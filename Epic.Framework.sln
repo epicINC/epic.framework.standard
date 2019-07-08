@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2015
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epic.Framework.Standard", "Epic.Framework.Standard\Epic.Framework.Standard.csproj", "{757BACBB-B027-4222-8711-7495ECC4742D}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epic.Excel", "Epic.Excel\Epic.Excel.csproj", "{700F75EB-5D2C-42B5-B03C-670A740F24BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevTest", "test\DevTest\DevTest.csproj", "{7756E663-0753-4D72-9AD6-36E160A8328E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epic.Hardware", "Epic.Hardware\Epic.Hardware.csproj", "{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{7756E663-0753-4D72-9AD6-36E160A8328E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7756E663-0753-4D72-9AD6-36E160A8328E}.Release|x64.ActiveCfg = Release|x64
 		{7756E663-0753-4D72-9AD6-36E160A8328E}.Release|x64.Build.0 = Release|x64
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F1C54E9-B679-48A3-AB52-C5CDC88C2685}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

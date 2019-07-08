@@ -48,8 +48,8 @@ namespace DevTest
         static void RunSnippet(string[] args)
         {
 
-            HttpTest.Test();
 
+            Hardware.Printers.EventWather();
             return;
 
             SymmetricAlgorithmTest.Test();

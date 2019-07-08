@@ -11,38 +11,38 @@ namespace Epic.Security
     /// <summary>
     /// 加密类
     /// </summary>
-    public static class Encryption
+    public static class HashAlgorithm
     {
-        public static string Encrypt(PasswordEncryptType encryptType, string format, string password, string salt)
+        public static string Hash(PasswordEncryptType encryptType, string format, string password, string salt)
         {
             switch (encryptType)
             {
                 case PasswordEncryptType.PlanText:
-                    return EncryptFormat(format, password, salt);
+                    return HashFormat(format, password, salt);
 
                 case PasswordEncryptType.MD516:
-                    return MD5(EncryptFormat(format, password)).Substring(8, 16);
+                    return MD5(HashFormat(format, password)).Substring(8, 16);
                 case PasswordEncryptType.MD532:
-                    return MD5(EncryptFormat(format, password));
+                    return MD5(HashFormat(format, password));
 
                 case PasswordEncryptType.MD516Salt:
-                    return MD5(EncryptFormat(format, password, salt)).Substring(8, 16);
+                    return MD5(HashFormat(format, password, salt)).Substring(8, 16);
                 case PasswordEncryptType.MD532Salt:
-                    return MD5(EncryptFormat(format, password, salt));
+                    return MD5(HashFormat(format, password, salt));
 
                 case PasswordEncryptType.SHA1:
-                    return SHA1(EncryptFormat(format, password));
+                    return SHA1(HashFormat(format, password));
                 case PasswordEncryptType.SHA256:
-                    return SHA256(EncryptFormat(format, password));
+                    return SHA256(HashFormat(format, password));
                 case PasswordEncryptType.SHA512:
-                    return SHA512(EncryptFormat(format, password));
+                    return SHA512(HashFormat(format, password));
 
                 case PasswordEncryptType.SHA1Salt:
-                    return SHA1(EncryptFormat(format, password, salt));
+                    return SHA1(HashFormat(format, password, salt));
                 case PasswordEncryptType.SHA256Salt:
-                    return SHA256(EncryptFormat(format, password, salt));
+                    return SHA256(HashFormat(format, password, salt));
                 case PasswordEncryptType.SHA512Salt:
-                    return SHA512(EncryptFormat(format, password, salt));
+                    return SHA512(HashFormat(format, password, salt));
                 case PasswordEncryptType.Salt:
                     return salt ?? Utility.Salt();
                 default:
@@ -51,14 +51,14 @@ namespace Epic.Security
             return password;
         }
 
-        static string EncryptFormat(string format, string password)
+        static string HashFormat(string format, string password)
         {
             if (!String.IsNullOrEmpty(format))
                 return String.Format(format, password);
             return password;
         }
 
-        static string EncryptFormat(string format, string password, string salt)
+        static string HashFormat(string format, string password, string salt)
         {
             if (!String.IsNullOrEmpty(format))
                 return String.Format(format, password, salt);
@@ -71,7 +71,7 @@ namespace Epic.Security
 
         static string Hash(string algorithm, string value)
         {
-            return HashAlgorithm.Create(algorithm).ComputeHash(Encoding.UTF8.GetBytes(value)).ToHex();
+            return System.Security.Cryptography.HashAlgorithm.Create(algorithm).ComputeHash(Encoding.UTF8.GetBytes(value)).ToHex();
         }
 
 
@@ -114,7 +114,7 @@ namespace Epic.Security
         public static string DVMD5(string encode)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(encode);
-            byte[] hashValue = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(bytes);
+            byte[] hashValue = ((System.Security.Cryptography.HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(bytes);
             StringBuilder sb = new StringBuilder();
             for (int i = 4; i < 12; i++)
                 sb.Append(hashValue[i].ToString("x2"));
