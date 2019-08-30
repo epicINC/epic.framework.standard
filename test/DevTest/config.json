@@ -1,0 +1,7 @@
+{
+  "host": "http://172.16.10.123",
+  "cardPrinter.name": "Card Printer",
+  "rfid.port": "COM3",
+  "rfid.secret": ""
+
+}

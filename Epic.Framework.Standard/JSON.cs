@@ -2,81 +2,87 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Epic.IO;
+using System.Threading.Tasks;
 
 namespace Epic
 {
     public static class JSON
     {
-        public static object Parse(string value)
-        {
-            return JsonConvert.DeserializeObject(value);
-        }
 
         public static T Parse<T>(string value)
         {
-            return JsonConvert.DeserializeObject<T>(value);
+            return JsonSerializer.Deserialize<T>(value);
         }
 
 
-        public static string Stringify(object value)
+        public static T Parse<T>(Stream value)
         {
-            return JsonConvert.SerializeObject(value);
+            return ParseAsync<T>(value).Result;
         }
 
-        public static object Parse(Stream value, Type objectType)
-        {
-            try
-            {
-                using (var sr = new StreamReader(value))
-                {
-                    return (new JsonSerializer()).Deserialize(sr, objectType);
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-  
-        }
 
-        public static object Parse(byte[] value, Type objectType)
+        public static async Task<T> ParseAsync<T>(Stream value)
         {
-            using (var ms = new MemoryStream(value))
-            {
-                return Parse(ms, objectType);
-            }
+            return await JsonSerializer.DeserializeAsync<T>(value);
         }
 
         public static T Parse<T>(byte[] value)
         {
-            return (T)Parse(value, typeof(T));
+            return JsonSerializer.Deserialize<T>(value);
         }
 
-        public static T Parse<T>(Stream value)
+        public static string Stringify<T>(T value)
         {
-            return (T)Parse(value, typeof(T));
+            return JsonSerializer.Serialize<T>(value);
         }
+
+
 
 
         public static T Read<T>(string path)
         {
-            if (!File.Exists(path)) return default(T);
+            return ReadAsync<T>(path).Result;
+        }
+
+        public static async Task<T> ReadAsync<T>(string path)
+        {
+            if (!File.Exists(path)) return default;
 
             using (var stream = File.OpenRead(path))
             {
-                return Parse<T>(stream);
+                return await ParseAsync<T>(stream);
             }
         }
 
-        public static bool Save(string path, object value)
+
+        public static void Write<T>(Stream stream, T value)
+        {
+            using (var writer = new Utf8JsonWriter(stream))
+            {
+                JsonSerializer.Serialize<T>(writer, value);
+            }
+        }
+
+        public static async Task WriteAsync<T>(Stream stream, T value)
+        {
+            await JsonSerializer.SerializeAsync<T>(stream, value);
+        }
+
+        public static bool Save<T>(string path, T value)
+        {
+            return SaveAsync<T>(path, value).Result;
+        }
+
+        public static async Task<bool> SaveAsync<T>(string path, T value)
         {
             try
             {
-                using (var sw = File.CreateText(path))
+                using (var sw = File.Create(path))
                 {
-                    var serializer = new JsonSerializer();
-                    serializer.Serialize(sw, value);
+                    await WriteAsync<T>(sw, value);
                 }
                 return true;
             } catch

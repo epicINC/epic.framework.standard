@@ -6,9 +6,49 @@ using System.Reflection;
 
 namespace Epic.Events
 {
-
-    public class EventEmitter
+    public interface IEventArgs
     {
+        object Value { get; }
+    }
+
+    public interface IEventArgs<out T> : IEventArgs
+    {
+
+        new T Value {get;}
+    }
+
+
+    public class EventArgs : IEventArgs
+    {
+        internal static EventArgs<T> Create<T>(T value)
+        {
+            return new EventArgs<T> { Value = value };
+        }
+
+        public object Value { get; }
+    }
+
+    public class EventArgs<T> : IEventArgs<T>
+    {
+        
+
+        public T Value
+        {
+            get;
+            internal set;
+        }
+
+        object IEventArgs.Value
+        {
+            get { return this.Value; }
+        }
+    }
+
+
+    public class EventEmitterX
+    {
+
+
 
         Dictionary<string, List<Listener>> Map = new Dictionary<string, List<Listener>>();
 
@@ -29,7 +69,7 @@ namespace Epic.Events
             this.Emit("newListener", name, value);
         }
 
-        public EventEmitter On(string name, Delegate action)
+        public EventEmitterX On(string name, Delegate action)
         {
             this.Add(name, new Listener(action));
             return this;
@@ -56,7 +96,7 @@ namespace Epic.Events
             result.ForEach(e => e.Invoke(args));
         }
 
-        public EventEmitter Off(string name, Delegate action)
+        public EventEmitterX Off(string name, Delegate action)
         {
             if (!this.Map.TryGetValue(name, out List<Listener> result)) return this;
 
@@ -72,7 +112,7 @@ namespace Epic.Events
         }
 
 
-        public EventEmitter RemoveAll(string name = null)
+        public EventEmitterX RemoveAll(string name = null)
         {
             if (name == null)
                 this.Map.Clear();

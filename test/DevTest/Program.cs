@@ -48,8 +48,11 @@ namespace DevTest
         static void RunSnippet(string[] args)
         {
 
+            DevTest.JSON.JSONTester.LoadFromFile();
+            return;
 
-            Hardware.Printers.EventWather();
+            EventEmitterTest.Combine();
+            //Hardware.Printers.EventWather();
             return;
 
             SymmetricAlgorithmTest.Test();
@@ -95,7 +98,7 @@ namespace DevTest
 
         private static void WL(object text, params object[] args)
         {
-            Console.WriteLine(text.ToString(), args);
+            Console.WriteLine(text?.ToString(), args);
         }
 
         private static void RL()

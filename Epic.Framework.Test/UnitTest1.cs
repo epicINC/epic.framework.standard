@@ -10,7 +10,7 @@ namespace Epic.Framework.Test
         [TestMethod]
         public async Task TestMethod1()
         {
-            var promise = Promise.Promiseify<bool, Exception>(async (resolve, reject) =>
+            var promise = Promise.Taskify<bool, Exception>(async (resolve, reject) =>
             {
 
                 await Task.Delay(1000);
@@ -18,13 +18,6 @@ namespace Epic.Framework.Test
 
 
             });
-
-            if (promise.Timeout(2000))
-            {
-                return;
-            }
-            var result = await promise.Task;
-            return;
         }
 
 

@@ -11,10 +11,9 @@ namespace DevTest
         public static async void Test()
         {
             var client = new System.Net.Http.HttpClient();
-            client.BaseAddress = new Uri("http://emaster.eastfair.com");
 
-            var result = await client.PostFormAsync(Login, new { userName = "admin", password = "123456" });
-
+            var result = await client.PostAsync(new Uri("https://api.exporegist.com/common/api/sms/GetVerificationCode?mobile=18616776117&sign=2019 婚纱及儿童摄影展&source=CWE&token=8b65a32c9aDB61e6"), null);
+            var txt = await result.Content.ReadAsStringAsync();
 
         }
     }

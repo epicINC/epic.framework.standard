@@ -17,16 +17,14 @@ namespace DevTest.Events
         {
             var e = new EventEmitter();
 
-            e.On("event", (bool value) =>
+            e.Once("event", ((bool, string) value) =>
             {
                 Console.WriteLine(value);
             });
 
-            e.Emit("event", true);
-            e.Emit("event", false);
+            e.Emit("event", true, "test1");
+            e.Emit("event", false, "test2");
 
-            e.Emit("event", true);
-            e.Emit("event", false, "adfad");
         }
 
 

@@ -48,7 +48,18 @@ namespace Epic.Extensions
             return value.Substring(beginIndex, endIndex - beginIndex);
         }
 
-
+        public static unsafe string FastReverse(string value)
+        {
+            var count = value.Length;
+            char* result = stackalloc char[count];
+            fixed(char* str = value)
+            {
+                int i = 0, offset = count - 1;
+                while (i < count)
+                    result[i++] = str[offset--];
+            }
+            return new string(result);
+        }
 
         #region Regex
 
