@@ -66,7 +66,7 @@ namespace Epic.Events
             return this.Map.TryGetValue(name, out var item) && item.Data.ContainsKey(listener);
         }
 
-        bool Set<T>(string name, Action<T> listener, Func<EventEmitterItem, Delegate> wrapper, bool prepend = false)
+        bool Set(string name, Delegate listener, Func<EventEmitterItem, Delegate> wrapper, bool prepend = false)
         {
             if (this.Map.TryGetValue(name, out var item) && item.Data.ContainsKey(listener)) return false;
 
@@ -97,7 +97,7 @@ namespace Epic.Events
         Delegate Get(string name)
         {
             this.Map.TryGetValue(name, out var result);
-            return result.Listener;
+            return result?.Listener;
         }
 
         #region Prepend Once and On
@@ -108,27 +108,39 @@ namespace Epic.Events
             //this.Set()
         }
 
-        public EventEmitter PrependOnceListener<T>(string eventName, Action<T> listener)
-        {
-            this.Set<T>(eventName, listener, null, true); ;
-            return this;
-        }
+        //public EventEmitter PrependOnceListener<T>(string eventName, Action<T> listener)
+        //{
+        //    this.Set(eventName, listener, null, true); ;
+        //    return this;
+        //}
 
-        public EventEmitter Once<T>(string eventName, Action<T> listener)
-        {
-            //this.Set<T>(eventName, listener, this.OnceWrapper);
-            return this;
-        }
+        //public EventEmitter Once<T>(string eventName, Action<T> listener)
+        //{
+        //    //this.Set<T>(eventName, listener, this.OnceWrapper);
+        //    return this;
+        //}
 
-        public EventEmitter PrependListener<T>(string eventName, Action<T> listener)
-        {
-            this.Set<T>(eventName, listener, null, true);
-            return this;
-        }
+        //public EventEmitter PrependListener<T>(string eventName, Action<T> listener)
+        //{
+        //    this.Set(eventName, listener, null, true);
+        //    return this;
+        //}
 
         public EventEmitter On<T>(string eventName, Action<T> listener)
         {
-            this.Set<T>(eventName, listener, null);
+            this.Set(eventName, listener, null);
+            return this;
+        }
+
+        public EventEmitter On<T, K>(string eventName, Action<T, K> listener)
+        {
+            this.Set(eventName, listener, null);
+            return this;
+        }
+
+        public EventEmitter On<T, K, I>(string eventName, Action<T, K, I> listener)
+        {
+            this.Set(eventName, listener, null);
             return this;
         }
 
@@ -154,7 +166,6 @@ namespace Epic.Events
         {
             var listener = this.Get(eventName) as Action<T, K>;
             if (listener != null) listener(args1, args2);
-            ;
             return this;
         }
 

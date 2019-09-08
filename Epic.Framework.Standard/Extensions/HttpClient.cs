@@ -54,7 +54,7 @@ namespace Epic.Extensions
             if (value == null) return default;
             using (var stream = await value.ReadAsStreamAsync())
             {
-                return await JSON.ParseAsync<T>(stream);
+                return JSON.Parse<T>(stream);
             }
         }
 

@@ -17,9 +17,9 @@ namespace DevTest.Events
         {
             var e = new EventEmitter();
 
-            e.Once("event", ((bool, string) value) =>
+            e.On("event", (bool args1, string args2) =>
             {
-                Console.WriteLine(value);
+                Console.WriteLine(args1);
             });
 
             e.Emit("event", true, "test1");
