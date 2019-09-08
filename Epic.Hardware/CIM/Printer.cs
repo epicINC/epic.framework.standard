@@ -41,7 +41,7 @@ namespace Epic.Hardware.CIM
             instance.ErrorInformation = value["ErrorInformation"].TryCast<string[]>();
             instance.HorizontalResolution = value["HorizontalResolution"].Cast<uint>();
             instance.JobCountSinceLastReset = value["JobCountSinceLastReset"].Cast<uint>();
-            instance.LanguagesSupported = value["LanguagesSupported"].Cast<PrinterLanguageType>();
+            instance.LanguagesSupported = value["LanguagesSupported"].TryCast<ushort, PrinterLanguageType>();
             instance.MarkingTechnology = value["MarkingTechnology"].Cast<PrinterMarkingTechnologyType>();
             instance.MaxCopies = value["MaxCopies"].Cast<uint>();
             instance.MaxNumberUp = value["MaxNumberUp"].Cast<uint>();
@@ -75,7 +75,7 @@ namespace Epic.Hardware.CIM
         public string[] ErrorInformation { get; protected set; }
         public uint? HorizontalResolution { get; protected set; }
         public uint? JobCountSinceLastReset { get; protected set; }
-        public PrinterLanguageType? LanguagesSupported { get; protected set; }
+        public PrinterLanguageType[] LanguagesSupported { get; protected set; }
         public PrinterMarkingTechnologyType? MarkingTechnology { get; protected set; }
         public uint? MaxCopies { get; protected set; }
         public uint? MaxNumberUp { get; protected set; }

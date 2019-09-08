@@ -48,11 +48,11 @@ namespace DevTest
         static void RunSnippet(string[] args)
         {
 
-            DevTest.JSON.JSONTester.LoadFromFile();
-            return;
+           // DevTest.JSON.JSONTester.LoadFromFile();
+     
 
-            EventEmitterTest.Combine();
-            //Hardware.Printers.EventWather();
+            //EventEmitterTest.Combine();
+            Hardware.Printers.StatusWatcher();
             return;
 
             SymmetricAlgorithmTest.Test();

@@ -48,7 +48,7 @@ namespace Epic.Hardware.WMI
         void OnChanged(Win32Printer e)
         {
             if (e == null) return;
-            if (e.PrinterStatus == this.Args.PrinterStatus) return;
+            //if (e.PrinterStatus == this.Args.PrinterStatus) return;
 
             switch (e.PrinterStatus)
             {
