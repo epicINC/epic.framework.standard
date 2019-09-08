@@ -20,11 +20,11 @@ namespace Epic.Hardware.Extensions
             return value as T;
         }
 
-        public static K[] TryCast<T, K>(this object value)
+        public static K[] TryCast<T, K>(this object value) where K : struct
         {
             var result = TryCast<T[]>(value);
             if (result == null) return default;
-            return result.Cast<K>().ToArray();
+            return result.Select(e => CastHelper.Cast<K>(e).Value).ToArray();
 
         }
     }

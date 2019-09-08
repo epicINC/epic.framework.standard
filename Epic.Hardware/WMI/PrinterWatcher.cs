@@ -26,7 +26,7 @@ namespace Epic.Hardware.WMI
 
         public PrinterWatcher(string name = null, bool autoStart = false)
         {
-            this.Query = $"SELECT * FROM __InstanceModificationEvent WITHIN 3 WHERE TargetInstance ISA 'Win32_Printer'{(String.IsNullOrWhiteSpace(name) ? String.Empty : $" AND TargetInstance.Name = '{name}'")}";
+            this.Query = $"SELECT * FROM __InstanceModificationEvent WITHIN 1 WHERE TargetInstance ISA \"Win32_Printer\"{(String.IsNullOrWhiteSpace(name) ? String.Empty : $" AND TargetInstance.Name=\"{name}\"")}";
             if (this.AutoStart = autoStart)
                 this.Start();
         }

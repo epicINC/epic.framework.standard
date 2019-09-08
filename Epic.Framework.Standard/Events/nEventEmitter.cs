@@ -126,6 +126,13 @@ namespace Epic.Events
         //    return this;
         //}
 
+
+        public EventEmitter On(string eventName, Action listener)
+        {
+            this.Set(eventName, listener, null);
+            return this;
+        }
+
         public EventEmitter On<T>(string eventName, Action<T> listener)
         {
             this.Set(eventName, listener, null);
@@ -148,7 +155,7 @@ namespace Epic.Events
 
         #region Emit
 
-        public EventEmitter Emit<T>(string eventName)
+        public EventEmitter Emit(string eventName)
         {
             var listener = this.Get(eventName) as Action;
             if (listener != null) listener();

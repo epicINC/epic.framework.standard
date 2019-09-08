@@ -51,8 +51,8 @@ namespace DevTest
            // DevTest.JSON.JSONTester.LoadFromFile();
      
 
-            EventEmitterTest.Combine();
-            //Hardware.Printers.StatusWatcher();
+            //EventEmitterTest.Combine();
+            Hardware.Printers.StatusWatcher();
             return;
 
             SymmetricAlgorithmTest.Test();

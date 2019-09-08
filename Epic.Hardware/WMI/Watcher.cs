@@ -31,10 +31,12 @@ namespace Epic.Hardware.WMI
   
         public void Start()
         {
-            if (this.EventWatcher != null) return;
-            //var query = new WqlEventQuery(sql);
-            this.EventWatcher = new ManagementEventWatcher(this.Query);
-            this.EventWatcher.EventArrived += Arrived;
+            if (this.EventWatcher == null)
+            {
+                //var query = new WqlEventQuery(sql);
+                this.EventWatcher = new ManagementEventWatcher(this.Query);
+                this.EventWatcher.EventArrived += Arrived;
+            }
             this.EventWatcher.Start();
 
         }
