@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Epic.Framework.Test.Jsons
 {
-
+    /*
     public class Config
     {
         [JsonPropertyName("stringValue")]
@@ -36,7 +35,6 @@ namespace Epic.Framework.Test.Jsons
 
         [JsonIgnore]
         public string Ignore { get; set; }
-
     }
 
     [TestClass]
@@ -64,4 +62,5 @@ namespace Epic.Framework.Test.Jsons
 
 
     }
+    */
 }

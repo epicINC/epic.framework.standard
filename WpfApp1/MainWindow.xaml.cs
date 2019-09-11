@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WpfApp1
 {
@@ -29,12 +30,23 @@ namespace WpfApp1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Epic.Hardware.Printers.LocalPrinter.DefaultJobStauts(20000000, 50, (printed, total) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    this.tip.Text += $"printed: {printed}, total: {total}\n";
+                });
+            });
+
+            return;
             var watcher = PrinterWatcher.Default;
             watcher.Printed += Watcher_Printed;
             watcher.Idle += Watcher_Idle;
             watcher.Start();
 
         }
+
+
 
         private void Watcher_Idle(PrinterWatcher arg1, Win32Printer arg2)
         {

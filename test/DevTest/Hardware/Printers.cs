@@ -17,6 +17,12 @@ namespace DevTest.Hardware
         }
 
 
+        public static void Jobs()
+        {
+           // LocalPrinter.DefaultJobStatus();
+
+
+        }
 
         public static void EventWather()
         {

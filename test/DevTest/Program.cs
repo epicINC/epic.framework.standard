@@ -52,7 +52,7 @@ namespace DevTest
      
 
             //EventEmitterTest.Combine();
-            Hardware.Printers.StatusWatcher();
+            Hardware.Printers.Jobs();
             return;
 
             SymmetricAlgorithmTest.Test();

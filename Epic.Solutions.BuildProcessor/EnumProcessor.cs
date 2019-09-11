@@ -48,7 +48,7 @@ namespace Epic.Solutions.BuildProcessor
             this.ChangeTypes(value.NestedTypes);
         }
 
-        void ChangeConstraints(IEnumerable<Collection<TypeReference>> collection)
+        void ChangeConstraints(IEnumerable<Collection<GenericParameterConstraint>> collection)
         {
             if (collection == null || !collection.Any()) return;
             
@@ -56,13 +56,15 @@ namespace Epic.Solutions.BuildProcessor
                 ChangeConstraints(item);
         }
         
-        void ChangeConstraints(Collection<TypeReference> collection)
+        void ChangeConstraints(Collection<GenericParameterConstraint> collection)
         {
-            if (!collection.Contains(this.IEnumConstraintType)) return;
-            collection.Remove(this.IEnumConstraintType);
-            collection.Add(this.EnumType);
+            var item = collection.FirstOrDefault(e => e.ConstraintType == this.IEnumConstraintType);
+            if (item == null) return;
 
-            if (this.ValueType == null) this.ValueType = collection.SingleOrDefault(e => e.FullName == "System.ValueType");
+            collection.Remove(item);
+            collection.Add(new GenericParameterConstraint(this.EnumType));
+
+            if (this.ValueType == null) this.ValueType = collection.FirstOrDefault(e => e.ConstraintType.FullName == "System.ValueType");
             if (this.ValueType == null) return;
             collection.Remove(this.ValueType);
         }
@@ -73,7 +75,7 @@ namespace Epic.Solutions.BuildProcessor
             set;
         }
 
-        TypeReference ValueType
+        GenericParameterConstraint ValueType
         {
             get;
             set;
