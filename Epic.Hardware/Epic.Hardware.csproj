@@ -77,4 +77,7 @@
     <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<ItemGroup>
+  <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0"/>
+</ItemGroup>
 </Project>

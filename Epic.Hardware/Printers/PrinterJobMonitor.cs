@@ -11,16 +11,22 @@ namespace Epic.Hardware.Printers
     public class PrinterJobMonitor : IDisposable
     {
 
-        public PrinterJobMonitor(PrintQueue queue, int timeout, int interval, CancellationTokenSource source = null) : this(queue, TimeSpan.FromMilliseconds(timeout), interval, source)
+        public PrinterJobMonitor(PrintQueue queue, int timeout, int interval)
         {
+            Init(queue, timeout, interval);
         }
 
-        public PrinterJobMonitor(PrintQueue queue, TimeSpan timeout, int interval, CancellationTokenSource source = null)
+        public PrinterJobMonitor(PrintQueue queue, TimeSpan timeout, int interval)
+        {
+            var value = (long)timeout.TotalMilliseconds;
+
+        }
+
+        void Init(PrintQueue queue, int timeout, int interval)
         {
             this.Queue = queue;
             this.Timeout = timeout;
             this.Interval = interval;
-            this.Source = source ?? new CancellationTokenSource();
         }
 
         public PrintQueue Queue { get; private set; }
@@ -28,7 +34,7 @@ namespace Epic.Hardware.Printers
         public CancellationTokenSource Source { get; private set; }
         public bool IsWorking { get; private set; }
 
-        public TimeSpan Timeout { get; private set; }
+        public int Timeout { get; private set; }
         public int Interval { get; private set; }
 
         public event Action<int, int> Changed;
