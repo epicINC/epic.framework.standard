@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epic.Socket.IO", "Epic.Socket.IO\Epic.Socket.IO.csproj", "{B5E7F71A-8AE8-4CE4-B396-422142C244C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epic.Engine.IO", "Epic.Engine.IO\Epic.Engine.IO.csproj", "{376A3171-9A06-4467-BABF-AB20AA1E8103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epic.HSocket", "Epic.HSocket\Epic.HSocket.csproj", "{5559431A-013B-4991-9D24-2DAC9688935E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epic.Test.App", "Epic.Test.App\Epic.Test.App.csproj", "{2039AEC9-B466-4AFA-8FBF-8E166E00502A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5E7F71A-8AE8-4CE4-B396-422142C244C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E7F71A-8AE8-4CE4-B396-422142C244C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E7F71A-8AE8-4CE4-B396-422142C244C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E7F71A-8AE8-4CE4-B396-422142C244C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{376A3171-9A06-4467-BABF-AB20AA1E8103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376A3171-9A06-4467-BABF-AB20AA1E8103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{376A3171-9A06-4467-BABF-AB20AA1E8103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376A3171-9A06-4467-BABF-AB20AA1E8103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5559431A-013B-4991-9D24-2DAC9688935E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5559431A-013B-4991-9D24-2DAC9688935E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5559431A-013B-4991-9D24-2DAC9688935E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5559431A-013B-4991-9D24-2DAC9688935E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2039AEC9-B466-4AFA-8FBF-8E166E00502A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2039AEC9-B466-4AFA-8FBF-8E166E00502A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2039AEC9-B466-4AFA-8FBF-8E166E00502A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2039AEC9-B466-4AFA-8FBF-8E166E00502A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A902DE10-0F04-4359-B73C-26651981DB55}
+	EndGlobalSection
+EndGlobal

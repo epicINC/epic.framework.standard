@@ -11,6 +11,16 @@ namespace Epic.Hardware.Printers
     public class PrinterJobMonitor : IDisposable
     {
 
+
+        public static PrinterJobMonitor Default
+        {
+            get
+            {
+                return new PrinterJobMonitor(LocalPrinter.DefaultQueue, TimeSpan.FromSeconds(20), 100);
+            }
+        }
+
+
         public PrinterJobMonitor(PrintQueue queue, int timeout, int interval)
         {
             Init(queue, timeout, interval);
@@ -19,6 +29,10 @@ namespace Epic.Hardware.Printers
         public PrinterJobMonitor(PrintQueue queue, TimeSpan timeout, int interval)
         {
             var value = (long)timeout.TotalMilliseconds;
+            if (value < -1 || value > Int32.MaxValue)
+                throw new ArgumentOutOfRangeException("timeout");
+
+            this.Init(queue, (int)value, interval);
 
         }
 
@@ -31,28 +45,24 @@ namespace Epic.Hardware.Printers
 
         public PrintQueue Queue { get; private set; }
 
-        public CancellationTokenSource Source { get; private set; }
         public bool IsWorking { get; private set; }
 
         public int Timeout { get; private set; }
         public int Interval { get; private set; }
 
-        public event Action<int, int> Changed;
+        bool IsCancel;
+
+        HashSet<int> JobIDS = new HashSet<int>();
 
 
         public async Task Start()
         {
-            await this.Start(this.Source.Token);
-        }
-
-        internal async Task Start(CancellationToken token)
-        {
-            var exists = new HashSet<int>();
             int previousTotal = 0, total = 0, previousPrinted = 0, printed = 0, jobsCount;
+            int i = 0, count = this.Timeout / this.Interval;
             PrintJobInfoCollection jobs;
 
-            this.Source.CancelAfter(this.Timeout);
-            while (!token.IsCancellationRequested)
+
+            while (!this.IsCancel)
             {
                 this.Queue.Refresh();
                 jobs = this.Queue.GetPrintJobInfoCollection();
@@ -60,14 +70,19 @@ namespace Epic.Hardware.Printers
                 foreach (var item in jobs)
                 {
                     jobsCount++;
-                    if (exists.Contains(item.JobIdentifier)) continue;
-                    exists.Add(item.JobIdentifier);
+                    if (this.JobIDS.Contains(item.JobIdentifier)) continue;
+                    this.JobIDS.Add(item.JobIdentifier);
                 }
-                if (token.IsCancellationRequested) return;
-                printed = (total = exists.Count) - jobsCount;
+                if (this.IsCancel) return;
+                if (++i > count)
+                {
+                    this.OnTimeouted(printed, total);
+                    return;
+                }
+                printed = (total = this.JobIDS.Count) - jobsCount;
                 if (previousPrinted != printed || previousTotal != total)
                 {
-                    this.Source.CancelAfter(this.Timeout);
+                    i = 0;
                     this.OnChanged(previousPrinted = printed, previousTotal = total);
                 }
 
@@ -77,9 +92,15 @@ namespace Epic.Hardware.Printers
 
         public void Stop()
         {
-            this.Source.Cancel();
+            this.IsCancel = true;
         }
 
+        public void Reset()
+        {
+            this.JobIDS.Clear();
+        }
+
+        public event Action<int, int> Changed;
 
         void OnChanged(int printed, int total)
         {
@@ -87,9 +108,17 @@ namespace Epic.Hardware.Printers
             this.Changed(printed, total);
         }
 
+        public event Action<int, int> Timeouted;
+
+        void OnTimeouted(int printed, int total)
+        {
+            if (this.Timeouted == null) return;
+            this.Timeouted(printed, total);
+        }
+
+
         public void Dispose()
         {
-            this.Source.Dispose();
             this.Queue.Dispose();
         }
     }

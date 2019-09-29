@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Grid>
+    <StackPanel>
+        <Button Click="Button_Click" Width="40" Height="20">test</Button>
         <TextBlock Name="tip" TextWrapping="Wrap" Width="200" />
-    </Grid>
+    </StackPanel>
 </Window>

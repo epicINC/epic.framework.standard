@@ -1,4 +1,5 @@
 ﻿
+using Epic.Hardware.Printers;
 using Epic.Hardware.WMI;
 using System;
 using System.Collections.Generic;
@@ -28,33 +29,44 @@ namespace WpfApp1
             InitializeComponent();
         }
 
+
+        PrinterJobMonitor watcher;
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Epic.Hardware.Printers.LocalPrinter.DefaultJobStauts(20000000, 50, (printed, total) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    this.tip.Text += $"printed: {printed}, total: {total}\n";
-                });
-            });
+            //Epic.Hardware.Printers.LocalPrinter.DefaultJobStauts(20000000, 50, (printed, total) =>
+            //{
+            //    this.Dispatcher.Invoke(() =>
+            //    {
+            //        this.tip.Text += $"printed: {printed}, total: {total}\n";
+            //    });
+            //});
 
-            return;
-            var watcher = PrinterWatcher.Default;
-            watcher.Printed += Watcher_Printed;
-            watcher.Idle += Watcher_Idle;
-            watcher.Start();
+
+            watcher = PrinterJobMonitor.Default;
+            watcher.Changed += Watcher_Printed;
+            watcher.Timeouted += Watcher_Timeouted;
+            _ = watcher.Start();
 
         }
 
-
+        private void Watcher_Timeouted(int arg1, int arg2)
+        {
+            this.watcher.Start();
+        }
 
         private void Watcher_Idle(PrinterWatcher arg1, Win32Printer arg2)
         {
         }
 
-        private static void Watcher_Printed(PrinterWatcher arg1, Win32Printer arg2)
+        private static void Watcher_Printed(int printed, int total)
         {
             Console.WriteLine("Printed");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            watcher.Stop();
         }
     }
 }

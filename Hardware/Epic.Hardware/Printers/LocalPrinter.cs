@@ -83,16 +83,16 @@ namespace Epic.Hardware.Printers
         }
 
 
-        public static void JobStatus3(PrintQueue queue, int timeout, int interval, Action<int, int> action, CancellationTokenSource source = null)
+        public static void JobStatus3(PrintQueue queue, int timeout, int interval, Action<int, int> action)
         {
-            var monitor = new PrinterJobMonitor(queue, timeout, interval, source);
+            var monitor = new PrinterJobMonitor(queue, timeout, interval);
             monitor.Changed += action;
             _ = monitor.Start();
         }
 
-        public static void JobStatus3(PrintQueue queue, int timeout, int interval, Action<int, int, PrinterJobMonitor> action, CancellationTokenSource source = null)
+        public static void JobStatus3(PrintQueue queue, int timeout, int interval, Action<int, int, PrinterJobMonitor> action)
         {
-            var monitor = new PrinterJobMonitor(queue, timeout, interval, source);
+            var monitor = new PrinterJobMonitor(queue, timeout, interval);
             monitor.Changed += (printed, total) => action(printed, total, monitor);
             _ = monitor.Start();
         }

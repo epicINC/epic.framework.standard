@@ -111,11 +111,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Epic.Hardware\Epic.Hardware.csproj">
-      <Project>{fa41d58c-3e9a-4c23-a425-247d06e7bc55}</Project>
-      <Name>Epic.Hardware</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
