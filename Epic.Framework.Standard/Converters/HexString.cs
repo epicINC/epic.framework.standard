@@ -85,6 +85,7 @@ namespace Epic.Converters
         // hexIndicator: use prefix ("0x") or not
         public unsafe static string Encode(byte[] value, bool hexIndicator)
         {
+            
             fixed (int* hexRef = ToHexTable)
 
             fixed (byte* sourceRef = value)

@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevTest", "test\DevTest\Dev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{CDEA4CD0-6A7B-4338-963B-FEA82BCEB911}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epic.Emit", "Epic.Emit\Epic.Emit.csproj", "{8FC54092-815E-491B-A78E-A0060C55DAC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{CDEA4CD0-6A7B-4338-963B-FEA82BCEB911}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDEA4CD0-6A7B-4338-963B-FEA82BCEB911}.Release|x64.ActiveCfg = Release|Any CPU
 		{CDEA4CD0-6A7B-4338-963B-FEA82BCEB911}.Release|x64.Build.0 = Release|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Debug|x64.Build.0 = Debug|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Release|x64.ActiveCfg = Release|Any CPU
+		{8FC54092-815E-491B-A78E-A0060C55DAC3}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
