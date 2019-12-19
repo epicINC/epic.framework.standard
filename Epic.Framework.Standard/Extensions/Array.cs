@@ -7,19 +7,30 @@ namespace System
     public static class ArrayExtensions
     {
 
-        public static ArraySegment<T>[] Split<T>(this T[] data, int step, Action<ArraySegment<T>> fn = null)
+        public static ArraySegment<T>[] Split<T>(this T[] data, int step)
+        {
+            return Split<T>(data, 0, step, default(Action<ArraySegment<T>, int, int>));
+        }
+
+        public static ArraySegment<T>[] Split<T>(this T[] data, int step, Action<ArraySegment<T>> fn)
         {
             return Split<T>(data, 0, step, fn);
         }
 
-        public static ArraySegment<T>[] Split<T>(this T[] data, int step, Action<ArraySegment<T>, int> fn = null)
+        public static ArraySegment<T>[] Split<T>(this T[] data, int step, Action<ArraySegment<T>, int> fn)
         {
             return Split<T>(data, 0, step, fn);
         }
 
-        public static ArraySegment<T>[] Split<T>(this T[] data, int step, Action<ArraySegment<T>, int, int> fn = null)
+        public static ArraySegment<T>[] Split<T>(this T[] data, int step, Action<ArraySegment<T>, int, int> fn)
         {
             return Split<T>(data, 0, step, fn);
+        }
+
+
+        public static ArraySegment<T>[] Split<T>(this T[] data, int offset, int step)
+        {
+            return Split<T>(data, offset, step, default(Action<ArraySegment<T>, int, int>));
         }
 
         public static ArraySegment<T>[] Split<T>(this T[] data, int offset, int step, Action<ArraySegment<T>> fn = null)
@@ -69,5 +80,8 @@ namespace System
 
             return result;
         }
+
+
+
     }
 }
