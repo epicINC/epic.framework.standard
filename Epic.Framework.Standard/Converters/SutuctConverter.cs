@@ -14,7 +14,7 @@ namespace Epic.Converters
         {
             var size = Marshal.SizeOf<T>();
             var result = new byte[size];
-            GCHandle handle;
+            GCHandle handle = new GCHandle();
             try
             {
                 handle = GCHandle.Alloc(result, GCHandleType.Pinned);
@@ -29,7 +29,7 @@ namespace Epic.Converters
 
         public static T FastDeserialize<T>(byte[] value) where T : struct
         {
-            GCHandle handle;
+            GCHandle handle = new GCHandle();
             try
             {
                 handle = GCHandle.Alloc(value, GCHandleType.Pinned);
