@@ -113,49 +113,49 @@ namespace Epic
 
         public void WriteIf(bool condition, string message)
         {
-            if (condition) return;
+            if (!condition) return;
             this.Write(message);
         }
 
         public void WriteIf(bool condition, string message, string category)
         {
-            if (condition) return;
+            if (!condition) return;
             this.Write(message, category);
         }
 
         public void WriteIf(bool condition, object value)
         {
-            if (condition) return;
+            if (!condition) return;
             this.Write(value);
         }
 
         public void WriteIf(bool condition, object value, string category)
         {
-            if (condition) return;
+            if (!condition) return;
             this.Write(value, category);
         }
 
         public void WriteLineIf(bool condition, string message)
         {
-            if (condition) return;
+            if (!condition) return;
             this.WriteLine(message);
         }
 
         public void WriteLineIf(bool condition, string message, string category)
         {
-            if (condition) return;
+            if (!condition) return;
             this.WriteLine(message, category);
         }
 
         public void WriteLineIf(bool condition, object value)
         {
-            if (condition) return;
+            if (!condition) return;
             this.WriteLine(value);
         }
 
         public void WriteLineIf(bool condition, object value, string category)
         {
-            if (condition) return;
+            if (!condition) return;
             this.WriteLine(value, category);
         }
 
